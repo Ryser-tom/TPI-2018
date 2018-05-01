@@ -21,7 +21,7 @@
     <?php
       # test to know if the user made a reseach
       if (isset($_GET['search'])) {
-        # code...
+        echo "on as une recherche";
       }  
     ?>
 

@@ -20,3 +20,14 @@
         }
     ]
 }
+
+/**
+paramètre commun pour VSCode
+
+    "php.validate.executablePath": "C:\\wamp\\bin\\php\\php7.2.4\\php.exe",
+    "php.executablePath": "C:\\wamp\\bin\\php\\php7.2.4\\php.exe",
+    "workbench.iconTheme": "vscode-icons",
+    "php.suggest.basic": false,
+    "workbench.colorTheme": "Atom One Dark",
+
+*/

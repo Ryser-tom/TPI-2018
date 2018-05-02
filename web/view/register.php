@@ -47,25 +47,32 @@
     </div>
   </nav>
 
-  <header class="bg-primary text-white">
-    <div class="container text-center">
-      <h1>Bienvenu sur E-commerce</h1>
-      <form action="items.php" method="GET">
-        <div>
-          <label for="name"></label>
-          <input type="text" id="name" name="user_name" />
-        <div>
-      </form>
-    </div>
-  </header>
-
   <section id="services" class="bg-light">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-          <h2>Services we offer</h2>
-          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut optio velit inventore, expedita quo laboriosam possimus
-            ea consequatur vitae, doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.</p>
+            <form action="items.php" method="GET">
+                <div>
+                    <label for="firstName">Nom</label>
+                    <input type="text" id="firstName" name="user_firstName" required />
+                <div>
+                <div>
+                    <label for="name">Prénom</label>
+                    <input type="text" id="name" name="user_name" required />
+                <div>
+                <div>
+                    <label for="mail">E-mail</label>
+                    <input type="mail" id="mail" name="user_mail" required />
+                <div>
+                <div>
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="user_password" required />
+                <div>
+                <div>
+                    <label for="password2">confirmation mot de passe</label>
+                    <input type="password" id="password2" name="user_confirmationPassword" required />
+                <div>
+            </form>
         </div>
       </div>
     </div>

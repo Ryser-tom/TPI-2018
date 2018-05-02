@@ -40,6 +40,9 @@
             <a class="nav-link active" href="items.php">Articles</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="register.php">inscription</a>
+          </li>
+          <li class="nav-item">
             <form action="items.php" method="GET">
               <label for="search" class="sr-only">Recherche</label>
               <input type="text" class="form-control" name="search" id="search" placeholder="Recherche">

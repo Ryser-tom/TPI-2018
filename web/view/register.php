@@ -51,7 +51,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-            <form action="items.php" method="GET">
+            <form action="items.php" method="POST">
                 <div>
                     <label for="firstName">Nom</label>
                     <input type="text" id="firstName" name="user_firstName" required />
@@ -63,6 +63,10 @@
                 <div>
                     <label for="mail">E-mail</label>
                     <input type="mail" id="mail" name="user_mail" required />
+                <div>
+                <div>
+                    <label for="birthDate">Date de naissance</label>
+                    <input type="Date" id="birthDate" name="user_birthDate" required />
                 <div>
                 <div>
                     <label for="password">Mot de passe</label>

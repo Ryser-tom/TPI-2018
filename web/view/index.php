@@ -1,4 +1,7 @@
-<?php session_start();?>
+<?php session_start();
+
+require_once('..\php\fonctionsBD_select.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,13 +62,13 @@
     </div>
   </header>
 
-  <section id="services" class="bg-light">
+  <section id="recentlyAdded" class="bg-light">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-          <h2>Services we offer</h2>
-          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut optio velit inventore, expedita quo laboriosam possimus
-            ea consequatur vitae, doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.</p>
+          <?php
+            $vehicle = getRecentVehicle();
+          ?>
         </div>
       </div>
     </div>

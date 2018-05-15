@@ -17,3 +17,20 @@ header {
 section {
   padding: 150px 0;
 }
+
+.valid {
+	background: rgba(0, 0, 0, 0) 2px 6px;
+	color: green;
+	line-height: 21px;
+	padding-left: 22px;
+}
+
+.invalid {
+	background: rgba(0, 0, 0, 0) 2px 6px;
+	color: red;
+	line-height: 21px;
+	padding-left: 22px;
+}
+.error{
+	color: red;
+}

@@ -2,17 +2,18 @@
 require_once('bd.php');
 
 /* Fonction permettant de s'enregistrer.  */
-function register($nom, $prenom, $dateNaissnace, $natel, $Email, $Mdp)
+function register($lastName, $firstName, $birthDate, $mobile, $Email, $password)
 {
+  $password = sha1($password);
   $connexion = getConnexion();
-  $request = $connexion->prepare("INSERT INTO `redloca`.`utilisateurs` (`nom`, `prenom`, `dateNaissance`, `natel`, `Email`, `Mdp`) 
-    VALUES (:nom, :prenom, :dateNaissance, :natel, :Email, :Mdp)");
-  $request->bindParam(':nom', $nom, PDO::PARAM_STR);
-  $request->bindParam(':Prenom', $prenom, PDO::PARAM_STR);
-  $request->bindParam(':dateNaissance', $dateNaissance, PDO::PARAM_STR);
-  $request->bindParam(':natel', $natel, PDO::PARAM_STR);
-  $request->bindParam(':Email', $Email, PDO::PARAM_STR);
-  $request->bindParam(':Mdp', sha1($Mdp), PDO::PARAM_STR);
+  $request = $connexion->prepare("INSERT INTO `utilisateurs` (`idutilisateur`, `nom`, `prenom`, `dateNaissance`, `natel`, `email`, `mdp`, `type`) 
+  VALUES (NULL, :nom, :prenom, :dateNaissance, :natel, :email, :mdp, 0);");
+  $request->bindParam(':nom', $lastName, PDO::PARAM_STR);
+  $request->bindParam(':Prenom', $firstName, PDO::PARAM_STR);
+  $request->bindParam(':dateNaissance', $birthDate, PDO::PARAM_STR);
+  $request->bindParam(':natel', $mobile, PDO::PARAM_STR);
+  $request->bindParam(':email', $Email, PDO::PARAM_STR);
+  $request->bindParam(':mdp', $password, PDO::PARAM_STR);
   $request->execute();
 }
 

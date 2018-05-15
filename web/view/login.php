@@ -27,42 +27,45 @@
 
   <section id="services" class="bg-light">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <form action="items.php" method="POST">
-                <div>
-                    <label for="firstName">Nom</label>
-                    <input type="text" id="firstName" name="user_firstName" required />
-                <div>
-                <div>
-                    <label for="name">Prénom</label>
-                    <input type="text" id="name" name="user_name" required />
-                <div>
-                <div>
-                    <label for="mail">E-mail</label>
-                    <input type="mail" id="mail" name="user_mail" required />
-                <div>
-                <div>
-                    <label for="birthDate">Date de naissance</label>
-                    <input type="Date" id="birthDate" name="user_birthDate" required />
-                <div>
-                <div>
-                    <label for="password">Mot de passe</label>
-                    <input type="password" id="password" name="user_password" required />
-                <div>
-                <div>
-                    <label for="password2">confirmation mot de passe</label>
-                    <input type="password" id="password2" name="user_confirmationPassword" required />
-                <div>
-            </form>
-        </div>
+    <div class="bootstrap-iso">
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2">
+    <form id="signupForm" action="login.php" method="POST">
+     <div class="form-group ">
+      <label class="control-label requiredField" for="email">
+       Email
+      </label>
+      <input type="email" class="form-control" id="email" name="email"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="password">
+       Mot de passe
+      </label>
+      <input type="password" class="form-control" id="password" name="password"/>
+     </div>
+     
+     <div class="form-group">
+      <div>
+       <button class="btn btn-warning " name="submit" type="submit">
+        Submit
+       </button>
+       <label><a href="register.php">Déja inscrit ?<br> Connectez vous</a></label>
       </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div>
+
+
     </div>
   </section>
 
   
   <!-- Footer -->
-  <footer class="py-5 bg-dark footer">
+  <footer class="py-5 bg-dark">
     <div class="container">
     <p class="m-0 text-center text-white">Copyright &copy; E-commerce 2018</p>
     </div>
@@ -79,6 +82,10 @@
   <!-- Custom JavaScript for this theme -->
   <script src="../js/scrolling-nav.js"></script>
 
+  <!-- plugin jQuery : jquery-validation -->
+  <script src="../jquery-validation-1.17.0/dist/jquery.validate.js"></script>
+
+  <script src="../js/validate-login.js"></script>
 </body>
 
 </html>

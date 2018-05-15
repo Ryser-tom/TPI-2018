@@ -1,4 +1,25 @@
-<?php session_start();?>
+<?php session_start();
+require_once('..\php\fonctionsBD_insert.php');
+
+if (isset($_POST['submit'])) {
+  if ((!empty($_POST['lastName'])) && (!empty($_POST['firstName'])) && (!empty($_POST['email'])) && (!empty($_POST['mobile'])) && (!empty($_POST['birthDate'])) && (!empty($_POST['password'])) && (!empty($_POST['confirmPassword']))) {
+    $lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
+    $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $mobile = filter_input(INPUT_POST, 'mobile', FILTER_SANITIZE_STRING);
+    $birthDate = filter_input(INPUT_POST, 'birthDate', FILTER_SANITIZE_STRING);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+    $confirmPassword = filter_input(INPUT_POST, 'confirmPassword', FILTER_SANITIZE_STRING);
+    if($password == $confirmPassword){
+    register($lastName, $firstName, $birthDate, $mobile, $email, $password);
+    echo "Succès";
+    //mot de passe pas identique
+    }
+  } else {
+      echo "Veuillez remplir tous les champs";
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,48 +48,64 @@
 
   <section id="services" class="bg-light">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <form action="items.php" method="POST">
-                <div>
-                    <label for="firstName">Nom</label>
-                    <input type="text" id="firstName" name="user_firstName" required />
-                <div>
-                <div>
-                    <label for="name">Prénom</label>
-                    <input type="text" id="name" name="user_name" required />
-                <div>
-                <div>
-                    <label for="mail">E-mail</label>
-                    <input type="mail" id="mail" name="user_mail" required />
-                <div>
-                <div>
-                    <label for="birthDate">Date de naissance</label>
-                    <input type="Date" id="birthDate" name="user_birthDate" required />
-                <div>
-                <div>
-                    <label for="password">Mot de passe</label>
-                    <input type="password" id="password" name="user_password" required />
-                <div>
-                <div>
-                    <label for="password2">confirmation mot de passe</label>
-                    <input type="password" id="password2" name="user_confirmationPassword" required />
-                <div>
-            </form>
-        </div>
+    <div class="bootstrap-iso">
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2">
+    <form id="registerForm" action="register.php" method="POST">
+     <div class="form-group ">
+      <label class="control-label requiredField" for="lastName">
+       Nom
+      </label>
+      <input type="text" class="form-control" id="lastName" name="lastName"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="firstName">
+       Pr&eacute;nom
+      </label>
+      <input type="text" class="form-control" id="firstName" name="firstName"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="email">
+       Email
+      </label>
+      <input type="email" class="form-control" id="email" name="email"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="mobile">
+       natel
+      </label>
+      <input type="tel" class="form-control" id="mobile" name="mobile"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="birthDate">
+       Date de naissance
+      </label>
+      <input type="date" class="form-control" id="birthDate" name="birthDate"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="password">
+       Mot de passe
+      </label>
+      <input type="password" class="form-control" id="password" name="password"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="confirmPassword">
+       Confirmation du mot de passe
+      </label>
+      <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"/>
+     </div>
+     <div class="form-group">
+      <div>
+        <input class="btn btn-warning " name="submit" type="submit" value="s'enregistrer">
+       <label><a href="login.php">Déja inscrit ?<br> Connectez vous</a></label>
       </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-          <h2>Contact us</h2>
-          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero odio fugiat voluptatem dolor, provident officiis,
-            id iusto! Obcaecati incidunt, qui nihil beatae magnam et repudiandae ipsa exercitationem, in, quo totam.</p>
-        </div>
-      </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div>
     </div>
   </section>
 
@@ -89,7 +126,11 @@
 
   <!-- Custom JavaScript for this theme -->
   <script src="../js/scrolling-nav.js"></script>
+  
+  <!-- plugin jQuery : jquery-validation -->
+  <script src="../jquery-validation-1.17.0/dist/jquery.validate.js"></script>
 
+  <script src="../js/validate-register.js"></script>
 </body>
 
 </html>

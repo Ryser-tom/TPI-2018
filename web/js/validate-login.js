@@ -1,5 +1,6 @@
 $.validator.setDefaults( {
 			submitHandler: function () {
+				form.submit();
 			}
 		} );
 		$( document ).ready( function () {

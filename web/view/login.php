@@ -1,4 +1,22 @@
-<?php session_start();?>
+<?php session_start();
+
+require_once('..\php\fonctionsBD_select.php');
+echo"zone de test";
+if (isset($_POST['submit'])) {
+  if ((!empty($_POST['email'])) && (!empty($_POST['password']))) {
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+    $login = login($email, $password);
+    if (count($login)==1) {
+      
+    }else{
+      echo"erreur dans la base de données";
+    }
+    header("location: index.php");
+  } else {
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,9 +65,7 @@
      
      <div class="form-group">
       <div>
-       <button class="btn btn-warning " name="submit" type="submit">
-        Submit
-       </button>
+       <input class="btn btn-warning " name="submit" type="submit" value="connexion"/>
        <label><a href="register.php">Déja inscrit ?<br> Connectez vous</a></label>
       </div>
      </div>

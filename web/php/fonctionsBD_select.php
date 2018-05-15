@@ -2,12 +2,13 @@
 require_once('bd.php');
 
 /* Fonction permettant de vérifier que l'utilisateur existe.  */
-function login($email, $Mdp)
+function login($email, $password)
 {
+    $password = sha1($password);
     $connexion = getConnexion();
-    $request = $connexion->prepare("SELECT * FROM redloca.utilisateurs where Email = ':Email' AND Mdp = ':Mdp'; )");
-    $request->bindParam(':Email', $Email, PDO::PARAM_STR);
-    $request->bindParam(':Mdp', sha1($Mdp), PDO::PARAM_STR);
+    $request = $connexion->prepare("SELECT * FROM `utilisateurs` WHERE email = :email AND mdp = :password");
+    $request->bindParam(':email', $email, PDO::PARAM_STR);
+    $request->bindParam(':password', $password, PDO::PARAM_STR);
     $request->execute();
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }

@@ -34,3 +34,10 @@ section {
 .error{
 	color: red;
 }
+#tableLabel{
+	text-align: right;
+	margin-left: 20%;
+}
+.right{
+	text-align: right;
+}

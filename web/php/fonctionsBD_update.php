@@ -2,24 +2,73 @@
 require_once('bd.php');
 
 /* Fonction permettant de mettre à jour les informations d'un vehicule */
-function updateUser($nom, $prenom, $natel, $Email, $Mdp, $type, $idutilisateur)
+function updateUser($lastName, $firstName, $birthDate, $mobile, $email, $password, $userId)
 {
+    $password = sha1($password);
     $connexion = getConnexion();
     $request = $connexion->prepare("UPDATE `redloca`.`utilisateurs` 
-    SET `nom`=':nom', `prenom`=':prenom', `dateNaissance`=':dateNaissance', `natel`=':natel', `Email`=':Email', 
-    `Mdp`=':Mdp', `type`=':type' WHERE `idutilisateur`=':idutilisateur';");
-    $request->bindParam(':nom', $nom, PDO::PARAM_STR);
-    $request->bindParam(':prenom', $prenom, PDO::PARAM_STR);
-    $request->bindParam(':dateNaissance', $dateNaissance, PDO::PARAM_STR);
-    $request->bindParam(':natel', $natel, PDO::PARAM_STR);
-    $request->bindParam(':Email', $Email, PDO::PARAM_STR);
-    $request->bindParam(':Mdp', $Mdp, PDO::PARAM_STR);
-    $request->bindParam(':type', $type, PDO::PARAM_INT);
-    $request->bindParam(':idutilisateur', $idutilisateur, PDO::PARAM_INT);
+        SET `nom`=:lastName, `prenom`=:firstName, `dateNaissance`=:birthDate, `natel`=:mobile, `Email`=:email 
+        WHERE `idUtilisateur`= :userId AND `mdp`=:password;");
+    $request->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+    $request->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+    $request->bindParam(':birthDate', $birthDate, PDO::PARAM_STR);
+    $request->bindParam(':mobile', $mobile, PDO::PARAM_STR);
+    $request->bindParam(':email', $email, PDO::PARAM_STR);
+    $request->bindParam(':userId', $userId, PDO::PARAM_STR);
+    $request->bindParam(':password', $password, PDO::PARAM_STR);
     $request->execute();
-    return $request->fetchAll(PDO::FETCH_ASSOC);
+
 }
 
+function adminUpdateUser($lastName, $firstName, $birthDate, $mobile, $email, $password, $userId, $actualPassword)
+{
+    if ($password=="") {
+        $password=$actualPassword;
+    }
+    $password = sha1($password);
+    $connexion = getConnexion();
+    $request = $connexion->prepare("UPDATE `redloca`.`utilisateurs` 
+        SET `nom`=:lastName, `prenom`=:firstName, `dateNaissance`=:birthDate, `natel`=:mobile, `email`=:email, `mdp`=:password  
+        WHERE `idUtilisateur`= :userId;");
+    $request->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+    $request->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+    $request->bindParam(':birthDate', $birthDate, PDO::PARAM_STR);
+    $request->bindParam(':mobile', $mobile, PDO::PARAM_STR);
+    $request->bindParam(':email', $email, PDO::PARAM_STR);
+    $request->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $request->bindParam(':password', $password, PDO::PARAM_STR);
+    $request->execute();
+
+}
+
+/* Fonction permettant de mettre à jour le mot de passe */
+function updatePassword($newPassword, $oldPassword, $userId)
+{
+    $newPassword = sha1($newPassword);
+    $oldPassword = sha1($oldPassword);
+    $connexion = getConnexion();
+    $request = $connexion->prepare("UPDATE `redloca`.`utilisateurs` 
+        SET `mdp`= :newPassword 
+        WHERE `idUtilisateur`= :userId AND `mdp`= :oldPassword
+        ;");
+    $request->bindParam(':newPassword', $newPassword, PDO::PARAM_STR);
+    $request->bindParam(':oldPassword', $oldPassword, PDO::PARAM_STR);
+    $request->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $request->execute();
+}
+function updateUserType($idUser, $actualType)
+{
+    if ($actualType == 1) {
+        $newType = 0;
+    }else{
+        $newType = 1;
+    }
+    $connexion = getConnexion();
+    $request = $connexion->prepare("UPDATE `utilisateurs` SET `type` = :newType WHERE `utilisateurs`.`idUtilisateur` = :idUser;");
+    $request->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+    $request->bindParam(':newType', $newType, PDO::PARAM_INT);
+    $request->execute();
+}
 /* Fonction permettant de mettre à jour les informations d'un vehicule */
 function updateVehicle($immatriculation, $marque, $modele, $couleur, $image, $dateDebutDisponibilite, $dateFinDisponibilite, $idCategorie)
 {

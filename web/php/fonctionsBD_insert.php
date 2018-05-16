@@ -6,7 +6,7 @@ function register($lastName, $firstName, $birthDate, $mobile, $Email, $password)
 {
   $password = sha1($password);
   $connexion = getConnexion();
-  $request = $connexion->prepare("INSERT INTO `utilisateurs` (`idutilisateur`, `nom`, `prenom`, `dateNaissance`, `natel`, `email`, `mdp`, `type`) 
+  $request = $connexion->prepare("INSERT INTO `utilisateurs` (`idUtilisateur`, `nom`, `prenom`, `dateNaissance`, `natel`, `email`, `mdp`, `type`) 
     VALUES (NULL, :nom, :Prenom, :dateNaissance, :natel, :email, :mdp, '0');");
   $request->bindParam(':nom', $lastName, PDO::PARAM_STR);
   $request->bindParam(':Prenom', $firstName, PDO::PARAM_STR);

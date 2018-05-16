@@ -1,20 +1,16 @@
 <?php session_start();
-require_once('..\php\fonctionsBD_insert.php');
-
+require_once('..\php\fonctionsBD_update.php');
+require_once('..\php\fonctionsBD_select.php');
+$user = getUser($_GET['userId'])[0];
 if (isset($_POST['submit'])) {
-  if ((!empty($_POST['lastName'])) && (!empty($_POST['firstName'])) && (!empty($_POST['email'])) && (!empty($_POST['mobile'])) && (!empty($_POST['birthDate'])) && (!empty($_POST['password'])) && (!empty($_POST['confirmPassword']))) {
+  if ((!empty($_POST['lastName'])) && (!empty($_POST['firstName'])) && (!empty($_POST['email'])) && (!empty($_POST['mobile'])) && (!empty($_POST['birthDate'])) && (!empty($_POST['password']))) {
     $lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
     $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $mobile = filter_input(INPUT_POST, 'mobile', FILTER_SANITIZE_STRING);
     $birthDate = filter_input(INPUT_POST, 'birthDate', FILTER_SANITIZE_STRING);
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-    $confirmPassword = filter_input(INPUT_POST, 'confirmPassword', FILTER_SANITIZE_STRING);
-    if($password == $confirmPassword){
-    register($lastName, $firstName, $birthDate, $mobile, $email, $password);
-    echo "Succès";
-    //mot de passe pas identique
-    }
+        adminUpdateUser($lastName, $firstName, $birthDate, $mobile, $email, $password, $_GET['userId'], $user['mdp']);
   } else {
       echo "Veuillez remplir tous les champs";
   }
@@ -30,7 +26,7 @@ if (isset($_POST['submit'])) {
   <meta name="description" content=" Site de E-commerce">
   <meta name="author" content="Tom Ryser">
 
-  <title>Inscription</title>
+  <title>modification des informations</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -52,36 +48,36 @@ if (isset($_POST['submit'])) {
  <div class="container-fluid">
   <div class="row">
    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2">
-    <form id="registerForm" action="register.php" method="POST">
+    <form id="adminUpdateUserForm" action="updateUser.php" method="POST">
      <div class="form-group ">
       <label class="control-label requiredField" for="lastName">
        Nom
       </label>
-      <input type="text" class="form-control" id="lastName" name="lastName"/>
+      <input type="text" class="form-control" id="lastName" name="lastName" value ="<?= $user['nom'] ?>"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="firstName">
        Pr&eacute;nom
       </label>
-      <input type="text" class="form-control" id="firstName" name="firstName"/>
+      <input type="text" class="form-control" id="firstName" name="firstName" value ="<?= $user['prenom'] ?>"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="email">
        Email
       </label>
-      <input type="email" class="form-control" id="email" name="email"/>
+      <input type="email" class="form-control" id="email" name="email" value ="<?= $user['email'] ?>"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="mobile">
        natel
       </label>
-      <input type="tel" class="form-control" id="mobile" name="mobile"/>
+      <input type="tel" class="form-control" id="mobile" name="mobile" value ="<?= $user['natel'] ?>"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="birthDate">
        Date de naissance
       </label>
-      <input type="date" class="form-control" id="birthDate" name="birthDate" max="<?= date ( 'Y-m-j', strtotime('-18 year' , strtotime($date)));?>" value="<?= date ( 'Y-m-j', strtotime('-18 year' , strtotime($date)));?>"/>
+      <input type="date" class="form-control" id="birthDate" name="birthDate" max="<?= date ( 'Y-m-j', strtotime('-18 year' , strtotime($date)));?>" value ="<?= $user['dateNaissance'] ?>"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="password">
@@ -89,16 +85,10 @@ if (isset($_POST['submit'])) {
       </label>
       <input type="password" class="form-control" id="password" name="password"/>
      </div>
-     <div class="form-group ">
-      <label class="control-label requiredField" for="confirmPassword">
-       Confirmation du mot de passe
-      </label>
-      <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"/>
-     </div>
      <div class="form-group">
       <div>
-        <input class="btn btn-warning " name="submit" type="submit" value="s'enregistrer">
-       <label><a href="login.php">Déja inscrit ?<br> Connectez vous</a></label>
+        <input class="btn btn-warning " name="submit" type="submit" value="enregistrer les modifications">
+        <input class="btn btn-danger " name="reset" type="reset" value="annuler les changements">
       </div>
      </div>
     </form>
@@ -130,7 +120,7 @@ if (isset($_POST['submit'])) {
   <!-- plugin jQuery : jquery-validation -->
   <script src="../jquery-validation-1.17.0/dist/jquery.validate.js"></script>
 
-  <script src="../js/validate-register.js"></script>
+  <script src="../js/validate-adminUpdateUser.js"></script>
 </body>
 
 </html>

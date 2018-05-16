@@ -1,26 +1,20 @@
 <?php session_start();
 
-require_once('..\php\fonctionsBD_select.php');
+require_once('..\php\fonctionsBD_update.php');
 try{
   if (isset($_POST['submit'])) {
-    if ((!empty($_POST['email'])) && (!empty($_POST['password']))) {
-      $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
-      $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-      $login = login($email, $password);
-      if (count($login)==1) {
-        $_SESSION['userId'] = $login['0']['idUtilisateur'];
-        $_SESSION['lastName'] = $login['0']['nom'];
-        $_SESSION['firstName'] = $login['0']['prenom'];
-        $_SESSION['birthDate'] = $login['0']['dateNaissance'];
-        $_SESSION['mobile'] = $login['0']['natel'];
-        $_SESSION['email'] = $login['0']['email'];
-        $_SESSION['type'] = $login['0']['type'];
+    if ((!empty($_POST['actualPassword'])) && (!empty($_POST['newPassword']))&& (!empty($_POST['confirmPassword']))) {
+      $actualPassword = filter_input(INPUT_POST, 'actualPassword', FILTER_SANITIZE_STRING);
+      $newPassword = filter_input(INPUT_POST, 'newPassword', FILTER_SANITIZE_STRING);
+      $confirmPassword = filter_input(INPUT_POST, 'confirmPassword', FILTER_SANITIZE_STRING);
+      if ($newPassword == $confirmPassword) {
+        updatePassword($newPassword, $actualPassword, $_SESSION['userId']);
       }else{
-        throw('erreur dans la base de donées');
+        throw new Exception('erreur dans la base de donées');
       }
       header("location: index.php");
     } else {
-      throw('vous devez remplir tout les champs');
+        throw new Exception('vous devez remplir tout les champs');
     }
   }
 }
@@ -60,24 +54,29 @@ catch(exception $e){
  <div class="container-fluid">
   <div class="row">
    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2">
-    <form id="signupForm" action="login.php" method="POST">
+    <form id="updatePasswordForm" action="changePassword.php" method="POST">
      <div class="form-group ">
-      <label class="control-label requiredField" for="email">
-       Email
+      <label class="control-label requiredField" for="actualPassword">
+       Mot de passe actuel
       </label>
-      <input type="email" class="form-control" id="email" name="email"/>
+      <input type="password" class="form-control" id="actualPassword" name="actualPassword"/>
      </div>
      <div class="form-group ">
-      <label class="control-label requiredField" for="password">
-       Mot de passe
+      <label class="control-label requiredField" for="newPassword">
+       Nouveau mot de passe
       </label>
-      <input type="password" class="form-control" id="password" name="password"/>
+      <input type="password" class="form-control" id="newPassword" name="newPassword"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="confirmPassword">
+       confirmation
+      </label>
+      <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"/>
      </div>
      
      <div class="form-group">
       <div>
-       <input class="btn btn-warning " name="submit" type="submit" value="connexion"/>
-       <label><a href="register.php">Déja inscrit ?<br> Connectez vous</a></label>
+       <input class="btn btn-warning " name="submit" type="submit" value="changer le mot de passe"/>
       </div>
      </div>
     </form>
@@ -112,7 +111,7 @@ catch(exception $e){
   <!-- plugin jQuery : jquery-validation -->
   <script src="../jquery-validation-1.17.0/dist/jquery.validate.js"></script>
 
-  <script src="../js/validate-login.js"></script>
+  <script src="../js/validate-password.js"></script>
 </body>
 
 </html>

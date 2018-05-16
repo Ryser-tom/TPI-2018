@@ -9,7 +9,7 @@ $.validator.setDefaults( {
 		}, "Letters only please" ); 
 
 		$( document ).ready( function () {
-			$( "#registerForm" ).validate( {
+			$( "#updateUserForm" ).validate( {
 				rules: {
 					firstName: {
 						required: true,
@@ -37,10 +37,6 @@ $.validator.setDefaults( {
 						required: true,
 						minlength: 8
 					},
-					confirmPassword: {
-						required: true,
-						equalTo: "#password"
-					},
 				},
 				messages: {
 					firstName: {
@@ -50,7 +46,7 @@ $.validator.setDefaults( {
 					},
 					lastName: {
 						required: "Veuillez entrer votre nom",
-						lettersonly: "Votre nom ne peux pas contenir de chiffres",
+						lettersonly: "Votre nom ne peux contenir que des lettres",
 						minlength: "vous devez entrer 2 lettres au minimum"
 					},
 					email: {
@@ -66,12 +62,8 @@ $.validator.setDefaults( {
 						date: "vous devez entrer une date"
 					},
 					password: {
-						required: "Veuillez entrer un mot de passe",
+						required: "Veuillez entrer votre mot de passe",
 						minlength: "Le mot de passe doit contenir au minimum 8 charactère"
-					},
-					confirmPassword: {
-						required: "Veuillez confirmer votre mot de passe",
-						equalTo: "Veuillez entrer le même mot de passe qu'au dessu"
 					},
 				},
 				errorElement: "em",

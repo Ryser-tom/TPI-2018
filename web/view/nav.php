@@ -25,8 +25,26 @@
                 </li>
                 <li class="nav-item">
                 <?php
-                if (isset($_SESSION['lastName'])) {
-                    echo"<a class=\"nav-link\" href=\"user.php\">".$_SESSION['lastName'].$_SESSION['firstName']."</a>";
+                if (isset($_SESSION['userId'])) {
+                    echo"
+                        <li class=\"nav-item dropdown\">
+                            <a class=\"nav-link dropdown-toggle\" href=\"user.php\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
+                            ". $_SESSION['lastName']." ".$_SESSION['firstName'] ."
+                            </a>
+                            <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">
+                            <a class=\"dropdown-item\" href=\"user.php\">profil</a>
+                        ";
+                        if($_SESSION['type'] == 1){
+                            echo "<div class=\"dropdown-divider\"></div>
+                                <a class=\"dropdown-item\" href=\"adminUsers.php\">Administration utilisateurs</a>
+                                <a class=\"dropdown-item\" href=\"adminVehicles.php\">Administration vehicules</a>";
+                        }
+                        echo"
+                        <div class=\"dropdown-divider\"></div>
+                            <a class=\"dropdown-item\" href=\"../php/logout.php\">Déconnexion</a>
+                            </div>
+                        </li>
+                    ";
                 }else{
                     echo"<a class=\"nav-link\" href=\"login.php\">connexion / inscription</a>";
                 }  

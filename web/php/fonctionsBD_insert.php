@@ -18,20 +18,20 @@ function register($lastName, $firstName, $birthDate, $mobile, $Email, $password)
 }
 
 /* fonction permettant d'ajouter un vehicule à la base de donnée */
-function addVehicle($immatriculation, $marque, $modele, $nbPlace, $couleur, $image, $dateDebutDisponibilite, $categories_idcategorie, $utilisateurs_idutilisateur)
+function addVehicle($numberPlate, $mark, $model, $class, $nbPlaces, $color, $image, $start, $end)
 {
   $connexion = getConnexion();
   $request = $connexion->prepare("INSERT INTO `redloca`.`vehicules` (`immatriculation`, `marque`, `modele`, `nbPlace`, `couleur`, `image`, `dateDebutDisponibilite`, `categories_idcategorie`, `utilisateurs_idutilisateur`) 
-    VALUES (':immatriculation', ':marque', ':modele', ':nbPlace', 'Orange', ':image', 'dateDebutDisponibilite', ':categories_idcategorie', ':utilisateurs_idutilisateur');");
-  $request->bindParam(':immatriculation', $immatriculation, PDO::PARAM_STR);
-  $request->bindParam(':marque', $marque, PDO::PARAM_STR);
-  $request->bindParam(':modele', $modele, PDO::PARAM_STR);
-  $request->bindParam(':nbPlace', $nbPlace, PDO::PARAM_INT);
-  $request->bindParam(':couleur', $couleur, PDO::PARAM_STR);
+    VALUES (':numberPlate', ':mark', ':model', ':nbPlace', ':color', ':image', ':image', ':start', ':end');");
+  $request->bindParam(':numberPlate', $numberPlate, PDO::PARAM_STR);
+  $request->bindParam(':mark', $mark, PDO::PARAM_STR);
+  $request->bindParam(':model', $model, PDO::PARAM_STR);
+  $request->bindParam(':class', $class, PDO::PARAM_INT);
+  $request->bindParam(':nbPlaces', $nbPlaces, PDO::PARAM_INT);
+  $request->bindParam(':color', $color, PDO::PARAM_STR);
   $request->bindParam(':image', $image, PDO::PARAM_STR);
-  $request->bindParam(':dateDebutDisponibilite', $dateDebutDisponibilite, PDO::PARAM_STR);
-  $request->bindParam(':categories_idcategorie', $categories_idcategorie, PDO::PARAM_INT);
-  $request->bindParam(':utilisateurs_idutilisateur', $utilisateurs_idutilisateur, PDO::PARAM_INT);
+  $request->bindParam(':start', $start, PDO::PARAM_STR);
+  $request->bindParam(':end', $end, PDO::PARAM_STR);
   $request->execute();
 }
 

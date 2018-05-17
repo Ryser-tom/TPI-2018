@@ -131,6 +131,7 @@ if (isset($_POST['submit'])) {
   <script src="../jquery-validation-1.17.0/dist/jquery.validate.js"></script>
 
   <script src="../js/validate-register.js"></script>
+
 </body>
 
 </html>

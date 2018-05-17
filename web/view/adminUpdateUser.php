@@ -3,14 +3,16 @@ require_once('..\php\fonctionsBD_update.php');
 require_once('..\php\fonctionsBD_select.php');
 $user = getUser($_GET['userId'])[0];
 if (isset($_POST['submit'])) {
-  if ((!empty($_POST['lastName'])) && (!empty($_POST['firstName'])) && (!empty($_POST['email'])) && (!empty($_POST['mobile'])) && (!empty($_POST['birthDate'])) && (!empty($_POST['password']))) {
+  if ((!empty($_POST['lastName'])) && (!empty($_POST['firstName'])) && (!empty($_POST['email'])) && (!empty($_POST['mobile'])) && (!empty($_POST['birthDate']))) {
     $lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
     $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $mobile = filter_input(INPUT_POST, 'mobile', FILTER_SANITIZE_STRING);
     $birthDate = filter_input(INPUT_POST, 'birthDate', FILTER_SANITIZE_STRING);
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-        adminUpdateUser($lastName, $firstName, $birthDate, $mobile, $email, $password, $_GET['userId'], $user['mdp']);
+        if(adminUpdateUser($lastName, $firstName, $birthDate, $mobile, $email, $password, $_GET['userId'], $user['mdp'])){
+          $user = getUser($_GET['userId'])[0];    
+        }
   } else {
       echo "Veuillez remplir tous les champs";
   }
@@ -48,7 +50,7 @@ if (isset($_POST['submit'])) {
  <div class="container-fluid">
   <div class="row">
    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2">
-    <form id="adminUpdateUserForm" action="updateUser.php" method="POST">
+    <form id="adminUpdateUserForm" action="adminUpdateUser.php?userId=<?=$user['idUtilisateur']?>" method="POST">
      <div class="form-group ">
       <label class="control-label requiredField" for="lastName">
        Nom
@@ -83,7 +85,7 @@ if (isset($_POST['submit'])) {
       <label class="control-label requiredField" for="password">
        Mot de passe
       </label>
-      <input type="password" class="form-control" id="password" name="password"/>
+      <input type="password" class="form-control" id="password" name="password" placeholder="********"/>
      </div>
      <div class="form-group">
       <div>

@@ -121,10 +121,10 @@ function getResume($dateDebut, $dateFin, $idVehicule)
 }
 
 /* Fonction permettant de récuperer les catégories avec le nom du type de catégorie  */
-function getCategory()
+function getClass()
 {
     $connexion = getConnexion();
-    $request = $connexion->prepare("SELECT idcategorie, nomCategorie, prixCategorie, nomTypeCategorie FROM redloca.categories
+    $request = $connexion->prepare("SELECT idCategorie, nomCategorie, prixCategorie, nomTypeCategorie FROM redloca.categories
       INNER JOIN type_categories ON type_categories.idTypeCategorie = categories.type_categories_idTypeCategorie;");
     $request->execute();
     return $request->fetchAll(PDO::FETCH_ASSOC);

@@ -6,6 +6,11 @@
         $url=$url[0];
        }
     $date = date('Y-m-d');
+    if(!isset($_GET['search'])){
+        $search = $date;
+    }else{
+        $search = $_GET['search'];
+    }
   ?>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <div class="container">
@@ -55,7 +60,7 @@
                 </li>
                 <li class="nav-item">
                     <form action="items.php" method="GET">
-                        <input type="date" class="form-control" name="search" id="search" min="<?= $date ?>" value="<?= $date ?>">
+                        <input type="date" class="form-control" name="search" id="search" min="<?= $date ?>" value="<?= $search ?>">
                 </li>
                 <li class="nav-item">
                     <button class="btn btn-outline-warning btn-rounded btn-sm my-0" type="submit">Search</button>

@@ -24,8 +24,10 @@ function adminUpdateUser($lastName, $firstName, $birthDate, $mobile, $email, $pa
 {
     if ($password=="") {
         $password=$actualPassword;
+    }else{
+        $password = sha1($password);
     }
-    $password = sha1($password);
+    
     $connexion = getConnexion();
     $request = $connexion->prepare("UPDATE `redloca`.`utilisateurs` 
         SET `nom`=:lastName, `prenom`=:firstName, `dateNaissance`=:birthDate, `natel`=:mobile, `email`=:email, `mdp`=:password  

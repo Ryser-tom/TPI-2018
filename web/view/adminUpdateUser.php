@@ -1,4 +1,6 @@
 <?php session_start();
+if(!isset($_SESSION['userId']))header("location: login.php");
+if($_SESSION['type'] != 1)header("location: index.php");
 require_once('..\php\fonctionsBD_update.php');
 require_once('..\php\fonctionsBD_select.php');
 $user = getUser($_GET['userId'])[0];

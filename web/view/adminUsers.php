@@ -3,6 +3,7 @@ if(!isset($_SESSION['userId']))header("location: login.php");
 if($_SESSION['type'] != 1)header("location: index.php");
 require_once('..\php\fonctionsBD_select.php');
 require_once('..\php\fonctionsBD_Update.php');
+require_once('..\php\fonctionsBD_Delete.php');
 if (isset($_GET['idUser']))updateUserType($_GET['idUser'], $_GET['actualType']);
 $users = getAllUsers();
 ?>

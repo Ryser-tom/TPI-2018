@@ -1,5 +1,5 @@
 <?php session_start();
-
+if(isset($_SESSION['userId']))header("location: login.php");
 require_once('..\php\fonctionsBD_select.php');
 try{
   if (isset($_POST['submit'])) {
@@ -77,7 +77,7 @@ catch(exception $e){
      <div class="form-group">
       <div>
        <input class="btn btn-warning " name="submit" type="submit" value="connexion"/>
-       <label><a href="register.php">Déja inscrit ?<br> Connectez vous</a></label>
+       <label><a href="register.php">pas encore inscrit ?<br> Enregistrez vous</a></label>
       </div>
      </div>
     </form>

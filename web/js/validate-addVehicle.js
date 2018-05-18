@@ -1,8 +1,6 @@
 $("#start").change(function() {
-	var startDate = $("#start").val().split("-");
-	var startEndDate = new string(startDate[2],"-", startDate[1],"-", startDate[0]+1);
 	$("#end").attr({
-		"min" : startEndDate
+		"min" : $("#start").val()
 	});
   });
 

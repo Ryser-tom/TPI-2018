@@ -1,10 +1,7 @@
   <?php
-    $url=explode("/", $_SERVER['HTTP_REFERER']);
-    $url = end($url);
-    if(strpos($url, '?') !== false) {
-        $url=explode("?", $url);
-        $url=$url[0];
-       }
+    $url=$_SERVER['PHP_SELF'];
+    $break = Explode('/', $url);
+    $file = $break[count($break) - 1];
     $date = date('Y-m-d');
     if(!isset($_GET['search'])){
         $search = $date;
@@ -14,7 +11,7 @@
   ?>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="<?php if ($url == "index.php") {echo"#page-top";}else{echo"index.php";}?>">
+        <a class="navbar-brand js-scroll-trigger" href="<?php if ($file == "index.php") {echo"#page-top";}else{echo"index.php";}?>">
             <img border="0" alt="RedLoca" src="img/logo_RedLoca.png" width="150" height="50">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,10 +20,10 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php if ($url == "index.php") {echo"#page-top";}else{echo"index.php";}?>">Accueil</a>
+                    <a class="nav-link" href="<?php if ($file == "index.php") {echo"#page-top";}else{echo"index.php";}?>">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php if ($url == "add.php") {echo"#page-top";}else{echo"add.php";}?>">Ajouter un véhicule</a>
+                    <a class="nav-link" href="<?php if ($file == "add.php") {echo"#page-top";}else{echo"add.php";}?>">Ajouter un véhicule</a>
                 </li>
                 <li class="nav-item">
                 <?php
@@ -63,7 +60,7 @@
                         <input type="date" class="form-control" name="search" id="search" min="<?= $date ?>" value="<?= $search ?>">
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-outline-warning btn-rounded btn-sm my-0" type="submit">Search</button>
+                    <button class="btn btn-outline-warning btn-rounded btn-sm my-0" type="submit">Chercher</button>
                     </form>
                 </li>
             </ul>

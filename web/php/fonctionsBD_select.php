@@ -55,10 +55,17 @@ function getAllVehicles(){
 }
 
 /* Fonction permettant de récuperer la liste de tous les véhicules disponible trié par ordre chronologique de disponibilité. */ 
-function getAllVehiclesAvaible(){
+function getAllVehiclesAvaible($dateResearch){
+    $dateResearch = strtotime($dateResearch);
+    $dateResearch = date('Y-m-d H:i:s', $dateResearch); //now you can save in DB
+
     $connexion = getConnexion();
-    $request = $connexion->prepare("SELECT * FROM redloca.vehicules 
-        WHERE dateFinDisponibilite > current_date() OR dateFinDisponibilite IS null ORDER BY dateDebutDisponibilite;");
+    $request = $connexion->prepare("SELECT idVehicule, immatriculation, marque, model, nbPlace, couleur, image, categories.nomCategorie AS categorie FROM redloca.vehicules 
+    INNER JOIN categories ON vehicules.categories_idcategorie = categories.idcategorie 
+    WHERE dateDebutDisponibilite <= DATE( :dateResearch)
+    AND ( dateFinDisponibilite >= DATE( :dateResearch) OR dateFinDisponibilite IS null) 
+    ORDER BY dateDebutDisponibilite;");
+    $request->bindParam(':dateResearch', $dateResearch, PDO::PARAM_STR);
     $request->execute();
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -77,16 +84,16 @@ function getVehicleOf($userId){
 /* Fonction permettant de récuperer la liste des véhicules disponible à une date choisi et trié par catégorie */ 
 function getAllVehicleAvailable(){
   $connexion = getConnexion();
-  $request = $connexion->prepare("SELECT vehicules.idVehicule, vehicules.marque, vehicules.modele, vehicules.nbPlace, vehicules.couleur, vehicules.dateDebutDisponibilite, categories.nomCategorie
-    FROM redloca.vehicules
-    INNER JOIN categories ON vehicules.categories_idcategorie = categories.idcategorie
-    WHERE NOT EXISTS(
-      SELECT 1 FROM redloca.reservation
-      WHERE reservation.Vehicules_idVehicule = vehicules.idVehicule
-        AND reservation.dateDebut < current_date()
-        AND reservation.dateFin > current_date()) 
-    AND dateDebutDisponibilite < current_date()
-    ORDER BY categories.nomCategorie;");
+  $request = $connexion->prepare("SELECT idVehicule, marque, model, nbPlace, couleur, image, vehicules.dateDebutDisponibilite, categories.nomCategorie AS categorie
+  FROM redloca.vehicules
+  INNER JOIN categories ON vehicules.categories_idcategorie = categories.idcategorie
+  WHERE NOT EXISTS(
+    SELECT 1 FROM redloca.reservation
+    WHERE reservation.Vehicules_idVehicule = vehicules.idVehicule
+      AND reservation.dateDebut < current_date()
+      AND reservation.dateFin > current_date()) 
+  AND dateDebutDisponibilite <= current_date()
+  ORDER BY categories.nomCategorie;");
   $request->execute();
   return $request->fetchAll(PDO::FETCH_ASSOC);
 }

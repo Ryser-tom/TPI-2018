@@ -1,4 +1,8 @@
-<?php session_start();?>
+<?php session_start();
+
+require_once('..\php\fonctionsBD_select.php');
+$vehicle = getAllVehiclesAvaible($_GET['search']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,25 +22,11 @@
 
   </head>
 
-    <?php
-      # test to know if the user made a reseach
-      if (isset($_GET['search'])) {
-        echo "on as une recherche";
-      }  
-    ?>
-
   <body>
    <!-- Navigation -->
 <?php 
   require_once('nav.php');
 ?>
-
-  <header class="bg-primary text-white">
-    <div class="container text-center">
-      <h1>Welcome to Scrolling Nav</h1>
-      <p class="lead">A landing page template freshly redesigned for Bootstrap 4</p>
-    </div>
-  </header>
     <!-- Page Content -->
     <div class="container">
 
@@ -44,110 +34,34 @@
       <h1 class="my-4">Page Heading
         <small>Secondary Text</small>
       </h1>
-
-      <div class="row">
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
-            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">Audi R8</a>
-              </h4>
-              <p class="card-text">
-                places: 2
-              </p>
-              <p class="card-text">
-                Transmition: automatique avec passeur de vitesse manuel.
-              </p>
-              <p class="card-text">
-                Dimension: longueur 175 in, largeur 77 in, hauteur 49 in 
-              </p>
+      <?php
+      $i = 0;
+      foreach ($vehicle as $key => $value) {
+        if($i==0)echo'<div class="row">';
+        if($i%3 == 0)echo'</div><div class="row">';
+        echo'
+            <div class="col-lg-4 col-sm-6 portfolio-item">
+              <div class="card h-100">
+                <a href="item.php?vehicleId='.$value['idVehicule'].'"><img class="card-img-top" src="../mediaUser/'.$value['image'].'" alt=""></a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="item.php?vehicleId='.$value['idVehicule'].'">'.$value['marque'].' '.$value['model'].'</a>
+                  </h4>
+                  <p class="card-text">
+                    places: '.$value['nbPlace'].'
+                  </p>
+                  <p class="card-text">
+                    couleur: '.$value['couleur'].'
+                  </p>
+                  <p class="card-text">
+                    catégorie: '.$value['categorie'].'
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
-            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">Project Two</a>
-              </h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
-            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">Project Three</a>
-              </h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos quisquam, error quod sed cumque, odio distinctio velit nostrum temporibus necessitatibus et facere atque iure perspiciatis mollitia recusandae vero vel quam!</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
-            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">Project Four</a>
-              </h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
-            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">Project Five</a>
-              </h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
-            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">Project Six</a>
-              </h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque earum nostrum suscipit ducimus nihil provident, perferendis rem illo, voluptate atque, sit eius in voluptates, nemo repellat fugiat excepturi! Nemo, esse.</p>
-            </div>
-          </div>
-        </div>
+        ';$i++;}
+      ?>
       </div>
-      <!-- /.row -->
-
-      <!-- Pagination -->
-      <ul class="pagination justify-content-center">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-            <span class="sr-only">Previous</span>
-          </a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">3</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-            <span class="sr-only">Next</span>
-          </a>
-        </li>
-      </ul>
-
     </div>
     <!-- /.container -->
 
@@ -163,6 +77,10 @@
     <script src="../jquery/jquery.min.js"></script>
     <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
 
+<!-- Plugin JavaScript -->
+<script src="../jquery-easing/jquery.easing.min.js"></script>
+  <!-- Custom JavaScript for this theme -->
+  <script src="../js/scrolling-nav.js"></script>
   </body>
 
 </html>

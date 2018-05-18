@@ -1,10 +1,9 @@
 <?php session_start();
+if(!isset($_SESSION['userId']))header("location: login.php");
 require_once('..\php\fonctionsBD_select.php');
-
-$class = getClass();
 try{
   if (isset($_POST['submit'])) {
-    if ((!empty($_POST['numberPlate'])) && (!empty($_POST['mark'])) && (!empty($_POST['model'])) && (!empty($_POST['class'])) && (!empty($_POST['nbPlaces'])) && (!empty($_POST['color'])) && (!empty($_POST['start'])) && (!empty($_POST['end']))) {
+    if ((!empty($_POST['numberPlate'])) && (!empty($_POST['mark'])) && (!empty($_POST['model'])) && (!empty($_POST['class'])) && (!empty($_POST['nbPlaces'])) && (!empty($_POST['color'])) && (!empty($_POST['start']))) {
       $numberPlate = filter_input(INPUT_POST, 'numberPlate', FILTER_SANITIZE_STRING);
       $mark = filter_input(INPUT_POST, 'mark', FILTER_SANITIZE_STRING);
       $model = filter_input(INPUT_POST, 'model', FILTER_SANITIZE_STRING);
@@ -13,9 +12,13 @@ try{
       $color = filter_input(INPUT_POST, 'color', FILTER_SANITIZE_STRING);
       $image = filterImage();
       $start = filter_input(INPUT_POST, 'start', FILTER_SANITIZE_STRING);
-      $end = filter_input(INPUT_POST, 'end', FILTER_SANITIZE_STRING);
+      if($_POST['end'] !== ""){
+        $end = filter_input(INPUT_POST, 'end', FILTER_SANITIZE_STRING);
+      }else{
+        $end = NULL;
+      }
       require_once('..\php\fonctionsBD_insert.php');
-      addVehicle($numberPlate, $mark, $model, $class, $nbPlaces, $color, $image, $start, $end);
+      addVehicle($numberPlate, $mark, $model, $class, $nbPlaces, $color, $image, $start, $end, $_SESSION['userId']);
     } else {
       throw new Exception("Veuillez remplir tous les champs");
     }
@@ -25,29 +28,26 @@ try{
 }
 
 function filterImage(){
-  $imgName = uniqid();
-  if(!empty($_FILES["media"])){
-    try{
-      if(isset($_POST['image'])){
-        foreach ($_FILES["media"]["tmp_name"] as $key => $value){
-          if(getimagesize($value)==0){
-            throw new Exception("ce fichier n'est pas une image");
-            exit();
-          }
-          if (!move_uploaded_file($_FILES["media"]['tmp_name'][$key], "../mediaUser/".$imgName)) {
-            throw new Exception("le fichier n'as pas pu être transféré.");
-            exit();
-          }
-        }
+  try{
+    if(!empty($_FILES["image"])){
+      if(getimagesize($_FILES["image"]["tmp_name"])==0){
+        throw new Exception("ce fichier n'est pas une image");
+        exit();
+      }
+      $pieces = explode(".", $_FILES["image"]['name']);
+      $imgName = (uniqid() . "." . end($pieces));
+      if (!move_uploaded_file($_FILES["image"]['tmp_name'], "../mediaUser/".$imgName)) {
+        throw new Exception("le fichier n'as pas pu être transféré.");
+        exit();
       }
     }
-    catch(Exception $e){
-      echo $e;
-      exit();
-    }
+  }
+  catch(Exception $e){
+    throw($e);
   }
   return $imgName;
 }
+$class = getClass();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,7 +81,7 @@ function filterImage(){
  <div class="container-fluid">
   <div class="row">
    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2">
-    <form id="addVehicle" action="add.php" method="POST">
+    <form id="addVehicle" action="add.php" enctype="multipart/form-data" method="POST">
      <div class="form-group ">
       <label class="control-label requiredField" for="numberPlate">Immatriculation</label>
       <input type="text" class="form-control" id="numberPlate" name="numberPlate" placeholder="GE 123 123"/>
@@ -124,7 +124,7 @@ function filterImage(){
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="image">image</label>
-      <input type="file" class="form-control" id="image" name="image" accept="image/x-png,image/gif,image/jpeg"/>
+      <input enctype="multipart/form-data" type="file" class="form-control" id="image" name="image" accept="image/x-png,image/gif,image/jpeg"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="start">date de début de disponibilité</label>

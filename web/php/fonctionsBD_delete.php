@@ -2,13 +2,24 @@
 require_once('bd.php');
 
 /* Fonction permettant de mettre à jour un type de catégorie */
-function deleteVehicule($idVehicule)
+function deleteVehicle($idVehicle)
 {
     $connexion = getConnexion();
-    $request = $connexion->prepare("DELETE FROM `redloca`.`vehicules` WHERE `idVehicule`=':idVehicule';");
-    $request->bindParam(':idVehicule', $idVehicule, PDO::PARAM_INT);
+    $request = $connexion->prepare("DELETE FROM `vehicules` WHERE `vehicules`.`idVehicule` = :idVehicle ");
+    $request->bindParam(':idVehicle', $idVehicle, PDO::PARAM_INT);
     $request->execute();
-    return $request->fetchAll(PDO::FETCH_ASSOC);
+    return true;
+}
+
+/* Fonction permettant de mettre à jour un type de catégorie */
+function cancelReservation($vehicleId, $userId)
+{
+    $connexion = getConnexion();
+    $request = $connexion->prepare("DELETE FROM `reservation` WHERE `reservation`.`vehicules_idVehicule` = :vehicleId AND `reservation`.`utilisateurs_idUtilisateur` = :userId ");
+    $request->bindParam(':vehicleId', $vehicleId, PDO::PARAM_INT);
+    $request->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $request->execute();
+    return true;
 }
 
 /* Fonction permettant de mettre à jour un type de catégorie */

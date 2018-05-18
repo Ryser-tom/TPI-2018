@@ -1,4 +1,5 @@
 <?php session_start();
+if(isset($_SESSION['userId']))header("location: index.php");
 require_once('..\php\fonctionsBD_insert.php');
 
 if (isset($_POST['submit'])) {

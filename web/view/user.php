@@ -1,6 +1,8 @@
 <?php session_start();
 if(!isset($_SESSION['userId']))header("location: login.php");
 require_once('..\php\fonctionsBD_select.php');
+require_once('..\php\fonctionsBD_delete.php');
+if (isset($_GET['vehicleId']))cancelReservation($_GET['vehicleId'], $_SESSION['userId']);
 $userReservation = getReservationOf($_SESSION['userId']);
 $userVehicle = getVehicleOf($_SESSION['userId']);
 ?>
@@ -76,7 +78,7 @@ $userVehicle = getVehicleOf($_SESSION['userId']);
                 foreach ($userVehicle as &$value) {
                     echo"
                         <tr>
-                            <td><a href=\"editVehicle?idVehicle=".$value['idVehicule']."\">".$value['immatriculation']."<a></td>
+                            <td><a href=\"editVehicle?vehicleId=".$value['idVehicule']."\">".$value['immatriculation']."<a></td>
                             <td>".$value['marque']."</td>
                             <td>".$value['model']."</td>
                             <td>".$value['dateDebutDisponibilite']." à ".$value['dateDebutDisponibilite']."</td>
@@ -96,6 +98,7 @@ $userVehicle = getVehicleOf($_SESSION['userId']);
                 <th scope=\"col\">Marque</th>
                 <th scope=\"col\">Model</th>
                 <th scope=\"col\">Periode de disponibilité</th>
+                <th scope=\"col\"></th>
               </tr>
             </thead>
             <tbody>
@@ -103,10 +106,11 @@ $userVehicle = getVehicleOf($_SESSION['userId']);
                 foreach ($userReservation as &$value) {
                     echo"
                         <tr>
-                            <td><a href=\"editVehicle?idVehicle=".$value['idVehicule']."\">".$value['immatriculation']."<a></td>
+                            <td><a href=\"editVehicle?vehicleId=".$value['idVehicule']."\">".$value['immatriculation']."<a></td>
                             <td>".$value['marque']."</td>
                             <td>".$value['model']."</td>
                             <td>".$value['dateDebut']." à ".$value['dateFin']."</td>
+                            <td><button type=\"button\" class=\"btn btn-warning\" onclick=\"window.location.href='user.php?vehicleId=".$value['idVehicule']."'\">annuler</button></td>
                         </tr>
                     ";    
                 }

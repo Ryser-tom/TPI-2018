@@ -18,11 +18,11 @@ function register($lastName, $firstName, $birthDate, $mobile, $Email, $password)
 }
 
 /* fonction permettant d'ajouter un vehicule à la base de donnée */
-function addVehicle($numberPlate, $mark, $model, $class, $nbPlaces, $color, $image, $start, $end)
+function addVehicle($numberPlate, $mark, $model, $class, $nbPlaces, $color, $image, $start, $end, $userId)
 {
   $connexion = getConnexion();
-  $request = $connexion->prepare("INSERT INTO `redloca`.`vehicules` (`immatriculation`, `marque`, `modele`, `nbPlace`, `couleur`, `image`, `dateDebutDisponibilite`, `categories_idcategorie`, `utilisateurs_idutilisateur`) 
-    VALUES (':numberPlate', ':mark', ':model', ':nbPlace', ':color', ':image', ':image', ':start', ':end');");
+  $request = $connexion->prepare("INSERT INTO `redloca`.`vehicules` (`immatriculation`, `marque`, `model`, `nbPlace`, `couleur`, `image`, `dateDebutDisponibilite`, `dateFinDisponibilite`, `categories_idcategorie`, `utilisateurs_idutilisateur`) 
+    VALUES (:numberPlate, :mark, :model, :nbPlaces, :color, :image, :start, :end, :class, :userId);");
   $request->bindParam(':numberPlate', $numberPlate, PDO::PARAM_STR);
   $request->bindParam(':mark', $mark, PDO::PARAM_STR);
   $request->bindParam(':model', $model, PDO::PARAM_STR);
@@ -32,6 +32,7 @@ function addVehicle($numberPlate, $mark, $model, $class, $nbPlaces, $color, $ima
   $request->bindParam(':image', $image, PDO::PARAM_STR);
   $request->bindParam(':start', $start, PDO::PARAM_STR);
   $request->bindParam(':end', $end, PDO::PARAM_STR);
+  $request->bindParam(':userId', $userId, PDO::PARAM_INT);
   $request->execute();
 }
 
@@ -40,7 +41,7 @@ function addTypeCategory($type)
 {
   $connexion = getConnexion();
   $request = $connexion->prepare("INSERT INTO `redloca`.`type_categories` (`nomTypeCategorie`) 
-    VALUES (':type');");
+    VALUES (:type);");
   $request->bindParam(':type', $type, PDO::PARAM_STR);
   $request->execute();
 }
@@ -49,8 +50,8 @@ function addTypeCategory($type)
 function addCategory($nomCategorie, $PrixCategory, $typeCategorie)
 {
   $connexion = getConnexion();
-  $request = $connexion->prepare("INSERT INTO `redloca`.`categories` (`nomCategorie`, `prixCategorie`, `type_categories_idTypeCategorie1`) 
-    VALUES (':nomCategorie', ':PrixCategory', ':typeCategorie');");
+  $request = $connexion->prepare("INSERT INTO `redloca`.`categories` (`nomCategorie`, `prixCategorie`, `type_categories_idTypeCategorie`) 
+    VALUES (:nomCategorie, :PrixCategory, :typeCategorie);");
   $request->bindParam(':nomCategorie', $nomCategorie, PDO::PARAM_STR);
   $request->bindParam(':PrixCategory', $PrixCategory, PDO::PARAM_INT);
   $request->bindParam(':typeCategorie', $typeCategorie, PDO::PARAM_INT);
@@ -61,8 +62,8 @@ function addCategory($nomCategorie, $PrixCategory, $typeCategorie)
 function addReservation($dateDebut, $dateFin, $idVehicule, $idUtilisateur)
 {
   $connexion = getConnexion();
-  $request = $connexion->prepare("INSERT INTO `redloca`.`reservation` (`dateDebut`, `dateFin`, `Vehicules_idVehicule`, `utilisateurs_idutilisateur`) 
-    VALUES ('2018-05-20', '2018-54-64', '1', '2');");
+  $request = $connexion->prepare("INSERT INTO `redloca`.`reservation` (`dateDebut`, `dateFin`, `Vehicules_idVehicule`, `utilisateurs_idUtilisateur`) 
+    VALUES (:dateDebut, :dateFin, :idVehicule, :idUtilisateur);");
   $request->bindParam(':dateDebut', $dateDebut, PDO::PARAM_STR);
   $request->bindParam(':dateFin', $dateFin, PDO::PARAM_STR);
   $request->bindParam(':idVehicule', $idVehicule, PDO::PARAM_INT);

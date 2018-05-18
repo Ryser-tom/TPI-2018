@@ -2,6 +2,8 @@
 if(!isset($_SESSION['userId']))header("location: login.php");
 if($_SESSION['type'] != 1)header("location: index.php");
 require_once('..\php\fonctionsBD_select.php');
+require_once('..\php\fonctionsBD_Delete.php');
+if (isset($_GET['idVehicle'], $_GET['delete']))deleteVehicle($_GET['idVehicle']);
 $vehicles = getAllVehicles();
 ?>
 <!DOCTYPE html>
@@ -47,6 +49,7 @@ $vehicles = getAllVehicles();
                 <th scope=\"col\">fin disponibilité</th>
                 <th scope=\"col\">propriétaire</th>
                 <th scope=\"col\">catégorie</th>
+                <th scope=\"col\"></th>
               </tr>
             </thead>
             <tbody>
@@ -70,6 +73,7 @@ $vehicles = getAllVehicles();
                     echo"
                             <td>".$value['nom']."  ".$value['prenom']."</td>
                             <td>".$value['nomCategorie']."</td>
+                            <td><button type=\"button\" class=\"btn btn-warning\" onclick=\"window.location.href='adminVehicles.php?idVehicle=".$value['idVehicule']."&delete=True'\">Effacer</button></td>
                         </tr>";    
                 }
                 echo"

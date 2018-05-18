@@ -1,6 +1,7 @@
 <?php session_start();
 
 require_once('..\php\fonctionsBD_select.php');
+$vehicle = getAllVehicleAvailable();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,10 +15,10 @@ require_once('..\php\fonctionsBD_select.php');
 
   <title>RedLoca</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  
-  <link href="../css/style.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="../css/style.css" rel="stylesheet">
 
 </head>
 
@@ -27,28 +28,37 @@ require_once('..\php\fonctionsBD_select.php');
 <?php 
   require_once('nav.php');
 ?>
-
-  <header class="bg-primary text-white">
-    <div class="container text-center">
-      <h1>Bienvenu sur E-commerce</h1>
-      <form action="items.php" method="GET">
-        <div>
-          <label for="name"></label>
-          <input type="text" id="name" name="user_name" />
-        <div>
-      </form>
-    </div>
-  </header>
-
   <section id="recentlyAdded" class="bg-light">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-          <?php
-            $vehicle = getRecentVehicle();
-          ?>
-        </div>
-      </div>
+    <?php
+      $i = 0;
+      foreach ($vehicle as $key => $value) {
+        if($i==0)echo'<div class="row">';
+        if($i%3 == 0)echo'</div><div class="row">';
+        echo'
+            <div class="col-lg-4 col-sm-6 portfolio-item">
+              <div class="card h-100">
+                <a href="item.php?vehicleId='.$value['idVehicule'].'"><img class="card-img-top" src="../mediaUser/'.$value['image'].'" alt=""></a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="item.php?vehicleId='.$value['idVehicule'].'">'.$value['marque'].' '.$value['model'].'</a>
+                  </h4>
+                  <p class="card-text">
+                    places: '.$value['nbPlace'].'
+                  </p>
+                  <p class="card-text">
+                    couleur: '.$value['couleur'].'
+                  </p>
+                  <p class="card-text">
+                    catégorie: '.$value['categorie'].'
+                  </p>
+                </div>
+              </div>
+            </div>
+        ';$i++;
+      if($i==6)exit();
+      }
+      ?>
     </div>
   </section>
 

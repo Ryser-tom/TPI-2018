@@ -59,18 +59,16 @@ function addCategory($nomCategorie, $PrixCategory, $typeCategorie)
 }
 
 /* fonction permettant d'ajouter une catégorie à la base de donnée */
-function addReservation($dateDebut, $dateFin, $idVehicule, $idUtilisateur)
+function addReservation($userId, $vehicleId, $startDate, $endDate)
 {
   $connexion = getConnexion();
   $request = $connexion->prepare("INSERT INTO `redloca`.`reservation` (`dateDebut`, `dateFin`, `Vehicules_idVehicule`, `utilisateurs_idUtilisateur`) 
-    VALUES (:dateDebut, :dateFin, :idVehicule, :idUtilisateur);");
-  $request->bindParam(':dateDebut', $dateDebut, PDO::PARAM_STR);
-  $request->bindParam(':dateFin', $dateFin, PDO::PARAM_STR);
-  $request->bindParam(':idVehicule', $idVehicule, PDO::PARAM_INT);
-  $request->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
+    VALUES (:startDate, :endDate, :vehicleId, :userId);");
+  $request->bindParam(':startDate', $startDate, PDO::PARAM_STR);
+  $request->bindParam(':endDate', $endDate, PDO::PARAM_STR);
+  $request->bindParam(':vehicleId', $vehicleId, PDO::PARAM_INT);
+  $request->bindParam(':userId', $userId, PDO::PARAM_INT);
   $request->execute();
 }
 
 ?>
-
-

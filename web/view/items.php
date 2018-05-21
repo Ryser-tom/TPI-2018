@@ -22,18 +22,14 @@ $vehicle = getAllVehiclesAvaible($_GET['search']);
 
   </head>
 
-  <body>
+  <body id="page-top">
    <!-- Navigation -->
 <?php 
   require_once('nav.php');
 ?>
+  <section id="recentlyAdded" class="bg-light">
     <!-- Page Content -->
     <div class="container">
-
-      <!-- Page Heading -->
-      <h1 class="my-4">Page Heading
-        <small>Secondary Text</small>
-      </h1>
       <?php
       $i = 0;
       foreach ($vehicle as $key => $value) {
@@ -42,7 +38,7 @@ $vehicle = getAllVehiclesAvaible($_GET['search']);
         echo'
             <div class="col-lg-4 col-sm-6 portfolio-item">
               <div class="card h-100">
-                <a href="item.php?vehicleId='.$value['idVehicule'].'"><img class="card-img-top" src="../mediaUser/'.$value['image'].'" alt=""></a>
+                <a href="item.php?vehicleId='.$value['idVehicule'].'&date='.$_GET['search'].'"><img class="card-img-top" src="../mediaUser/'.$value['image'].'" alt=""></a>
                 <div class="card-body">
                   <h4 class="card-title">
                     <a href="item.php?vehicleId='.$value['idVehicule'].'">'.$value['marque'].' '.$value['model'].'</a>
@@ -64,7 +60,7 @@ $vehicle = getAllVehiclesAvaible($_GET['search']);
       </div>
     </div>
     <!-- /.container -->
-
+  </section>
     <!-- Footer -->
     <footer class="py-5 bg-dark">
       <div class="container">

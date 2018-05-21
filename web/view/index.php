@@ -1,7 +1,7 @@
 <?php session_start();
 
 require_once('..\php\fonctionsBD_select.php');
-$vehicle = getAllVehicleAvailable();
+$vehicle = getRecentVehicleAvaible();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +38,7 @@ $vehicle = getAllVehicleAvailable();
         echo'
             <div class="col-lg-4 col-sm-6 portfolio-item">
               <div class="card h-100">
-                <a href="item.php?vehicleId='.$value['idVehicule'].'"><img class="card-img-top" src="../mediaUser/'.$value['image'].'" alt=""></a>
+                <a href="item.php?vehicleId='.$value['idVehicule'].'&date='.date("Y-m-d").'"><img class="card-img-top" src="../mediaUser/'.$value['image'].'" alt=""></a>
                 <div class="card-body">
                   <h4 class="card-title">
                     <a href="item.php?vehicleId='.$value['idVehicule'].'">'.$value['marque'].' '.$value['model'].'</a>

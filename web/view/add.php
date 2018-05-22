@@ -27,26 +27,34 @@ try{
         $end = NULL;
       }
       require_once('..\php\fonctionsBD_insert.php');
-      addVehicle($numberPlate, $mark, $model, $class, $nbPlaces, $color, $image, $start, $end, $_SESSION['userId']);
+      if(addVehicle($numberPlate, $mark, $model, $class, $nbPlaces, $color, $image, $start, $end, $_SESSION['userId'])){
+        $info = '<div class="alert alert-success" role="alert">Vôtre véhicule as été ajouter avec succès</div>';
+      }else{
+        throw new Exception('une erreur est survenue.');
+      }
     } else {
-      throw new Exception("Veuillez remplir tous les champs");
+      throw new Exception('Veuillez remplir tous les champs');
     }
   }
 }catch(Exception $e){
-  echo $e;
+  if(!isset($info)){
+  $info = '<div class="alert alert-warning" role="alert">'.$e.'</div>';
+  }else{
+    $info = $e;
+  }
 }
 
 function filterImage(){
   try{
     if(!empty($_FILES["image"])){
       if(getimagesize($_FILES["image"]["tmp_name"])==0){
-        throw new Exception("ce fichier n'est pas une image");
+        throw new Exception('ce fichier n\'est pas une image');
         exit();
       }
       $pieces = explode(".", $_FILES["image"]['name']);
       $imgName = (uniqid() . "." . end($pieces));
       if (!move_uploaded_file($_FILES["image"]['tmp_name'], "../mediaUser/".$imgName)) {
-        throw new Exception("le fichier n'as pas pu être transféré.");
+        throw new Exception('le fichier n\'as pas pu être transféré.');
         exit();
       }
     }
@@ -90,6 +98,12 @@ $class = getClass();
    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2">
     <form id="addVehicle" action="add.php" enctype="multipart/form-data" method="POST">
      <div class="form-group ">
+     <?php
+        if(isset($info)){
+          echo"test";
+          echo$info;
+        }
+      ?>
       <label class="control-label requiredField" for="numberPlate">Immatriculation</label>
       <input type="text" class="form-control" id="numberPlate" name="numberPlate" placeholder="GE 123 123"/>
      </div>

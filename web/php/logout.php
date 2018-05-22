@@ -4,5 +4,5 @@ session_destroy();
 session_abort();
 
 
-header("location: ../index.php");
+header("location: ../view/index.php");
 ?>

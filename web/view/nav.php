@@ -25,12 +25,11 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php if ($file == "index.php") {echo"#page-top";}else{echo"index.php";}?>">Accueil</a>
+                    <a class="nav-link" href="<?php if($file == "index.php"){echo"#page-top";}else{echo"index.php";}?>">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php if ($file == "add.php") {echo"#page-top";}else{echo"add.php";}?>">Ajouter un véhicule</a>
+                    <a class="nav-link" href="<?php if($file == "add.php"){echo"#page-top";}else{echo"add.php";}?>">Ajouter un véhicule</a>
                 </li>
-                <li class="nav-item">
                 <?php
                 if (isset($_SESSION['userId'])) {
                     echo"

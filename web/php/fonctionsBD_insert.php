@@ -34,6 +34,7 @@ function addVehicle($numberPlate, $mark, $model, $class, $nbPlaces, $color, $ima
   $request->bindParam(':end', $end, PDO::PARAM_STR);
   $request->bindParam(':userId', $userId, PDO::PARAM_INT);
   $request->execute();
+  return $request;
 }
 
 /* fonction permettant d'ajouter un type de catégorie à la base de donnée */

@@ -10,7 +10,7 @@ session_start();
 if(!isset($_SESSION['userId']))header("location: login.php");
 require_once('..\php\fonctionsBD_select.php');
 require_once('..\php\fonctionsBD_delete.php');
-if (isset($_GET['vehicleId']))cancelReservation($_GET['vehicleId'], $_SESSION['userId']);
+if (isset($_GET['vehicleId']))cancelReservation($_GET['vehicleId'], $_SESSION['userId'], $_GET['startDate'], $_GET['endDate']);
 $userReservation = getReservationOf($_SESSION['userId']);
 $userVehicle = getVehicleOf($_SESSION['userId']);
 ?>
@@ -118,7 +118,7 @@ $userVehicle = getVehicleOf($_SESSION['userId']);
                             <td>".$value['marque']."</td>
                             <td>".$value['model']."</td>
                             <td>".$value['dateDebut']." à ".$value['dateFin']."</td>
-                            <td><button type=\"button\" class=\"btn btn-warning\" onclick=\"window.location.href='user.php?vehicleId=".$value['idVehicule']."'\">annuler</button></td>
+                            <td><button type=\"button\" class=\"btn btn-warning\" onclick=\"window.location.href='user.php?vehicleId=".$value['idVehicule']."&startDate=".$value['dateDebut']."&endDate=".$value['dateFin']."'\">annuler</button></td>
                         </tr>
                     ";    
                 }

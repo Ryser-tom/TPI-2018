@@ -24,16 +24,16 @@ try{
         $_SESSION['email'] = $login['0']['email'];
         $_SESSION['type'] = $login['0']['type'];
       }else{
-        throw('erreur dans la base de donées');
+        throw new Exception("L'email ou le mot de passe ne correspont pas");
       }
       header("location: index.php");
     } else {
-      throw('vous devez remplir tout les champs');
+      throw new Exception('vous devez remplir tout les champs');
     }
   }
 }
 catch(exception $e){
-  echo $e->getMessage();
+  $info = $e->getMessage();
 }
 ?>
 <!DOCTYPE html>
@@ -70,6 +70,11 @@ catch(exception $e){
    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2">
     <form id="signupForm" action="login.php" method="POST">
      <div class="form-group ">
+      <?php
+        if(isset($info)){
+          echo'<div class="alert alert-warning">'.$info.'.</div>';
+        }
+      ?>
       <label class="control-label requiredField" for="email">
        Email
       </label>

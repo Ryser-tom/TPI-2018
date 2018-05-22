@@ -49,7 +49,7 @@ $vehicle = getAllVehiclesAvaible($_GET['search']);
                 <a href="item.php?vehicleId='.$value['idVehicule'].'&date='.$_GET['search'].'"><img class="card-img-top" src="../mediaUser/'.$value['image'].'" alt=""></a>
                 <div class="card-body">
                   <h4 class="card-title">
-                    <a href="item.php?vehicleId='.$value['idVehicule'].'">'.$value['marque'].' '.$value['model'].'</a>
+                    <a href="item.php?vehicleId='.$value['idVehicule'].'&date='.$_GET['search'].'">'.$value['marque'].' '.$value['model'].'</a>
                   </h4>
                   <p class="card-text">
                     places: '.$value['nbPlace'].'

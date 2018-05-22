@@ -161,7 +161,7 @@ if ($vehicle == null) {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-          <input type="submit" class="btn btn-warning" value="Confirmer la réservation" name="submit"/>
+          <input type="submit" class="btn btn-warning" value="Confirmer la location" name="submit"/>
         </div>
       </div>
     </div>
@@ -169,7 +169,7 @@ if ($vehicle == null) {
 </div>
 
 <!-- Bootstrap core JavaScript -->
-<script src="../jquery/jquery.min.js"></script>
+<script src="../jquery/jquery.js"></script>
 <script src="../bootstrap/js/bootstrap.bundle.js"></script>
 
   <!-- Custom JavaScript for this theme -->

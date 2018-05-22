@@ -1,4 +1,12 @@
-<?php session_start();
+<?php
+/**
+ * Author: Tom Ryser
+ * Date: 22.05.2018
+ * Version : 1.0
+ * Title : login
+ * Description : contain a form to log in.
+ */
+session_start();
 if(isset($_SESSION['userId']))header("location: login.php");
 require_once('..\php\fonctionsBD_select.php');
 try{
@@ -29,13 +37,13 @@ catch(exception $e){
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content=" Site de E-commerce">
+  <meta name="description" content="RedLoca">
   <meta name="author" content="Tom Ryser">
 
   <title>Connexion - RedLoca</title>

@@ -1,4 +1,12 @@
-<?php session_start();
+<?php
+/**
+ * Author: Tom Ryser
+ * Date: 22.05.2018
+ * Version : 1.0
+ * Title : item
+ * Description : information on a vehicle and modal for confirmation of location.
+ */
+session_start();
 
 require_once('..\php\fonctionsBD_select.php');
 $vehicle = getVehicleInfosReservation($_GET['vehicleId'], $_GET['date']);
@@ -15,7 +23,7 @@ if ($vehicle == null) {
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content=" Site de E-commerce">
+    <meta name="description" content="RedLoca">
   <meta name="author" content="Tom Ryser">
 
     <title>Liste des véhicules - RedLoca</title>
@@ -164,8 +172,6 @@ if ($vehicle == null) {
 <script src="../jquery/jquery.min.js"></script>
 <script src="../bootstrap/js/bootstrap.bundle.js"></script>
 
-<!-- Plugin JavaScript -->
-<script src="../jquery-easing/jquery.easing.js"></script>
   <!-- Custom JavaScript for this theme -->
   <script src="../js/scrolling-nav.js"></script>
   <script>

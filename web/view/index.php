@@ -1,16 +1,24 @@
-<?php session_start();
+<?php
+/**
+ * Author: Tom Ryser
+ * Date: 22.05.2018
+ * Version : 1.0
+ * Title : index
+ * Description : contain 6 most recent available vehicles.
+ */
+session_start();
 
 require_once('..\php\fonctionsBD_select.php');
 $vehicle = getRecentVehicleAvaible();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content=" Site de E-commerce">
+  <meta name="description" content="RedLoca">
   <meta name="author" content="Tom Ryser">
 
   <title>Accueil - RedLoca</title>

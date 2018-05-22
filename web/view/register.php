@@ -1,4 +1,12 @@
-<?php session_start();
+<?php
+/**
+ * Author: Tom Ryser
+ * Date: 22.05.2018
+ * Version : 1.0
+ * Title : register
+ * Description : contain a form to register.
+ */
+session_start();
 if(isset($_SESSION['userId']))header("location: index.php");
 require_once('..\php\fonctionsBD_insert.php');
 
@@ -22,7 +30,7 @@ if (isset($_POST['submit'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
 

@@ -1,4 +1,12 @@
-<?php session_start();
+<?php
+/**
+ * Author: Tom Ryser
+ * Date: 22.05.2018
+ * Version : 1.0
+ * Title : adminVehicles
+ * Description : contains the list of all vehicle in the DB.
+ */
+session_start();
 if(!isset($_SESSION['userId']))header("location: login.php");
 if($_SESSION['type'] != 1)header("location: index.php");
 require_once('..\php\fonctionsBD_select.php');
@@ -13,10 +21,10 @@ $vehicles = getAllVehicles();
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content=" Site de E-commerce">
+  <meta name="description" content="RedLoca">
   <meta name="author" content="Tom Ryser">
 
-  <title>administration utilisateurs</title>
+  <title>administration utilisateurs - RedLoca</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">

@@ -1,4 +1,12 @@
   <?php
+/**
+ * Author: Tom Ryser
+ * Date: 22.05.2018
+ * Version : 1.0
+ * Title : nav
+ * Description : contain the nav of all pages.
+ */
+
     $url=$_SERVER['PHP_SELF'];
     $break = Explode('/', $url);
     $file = $break[count($break) - 1];

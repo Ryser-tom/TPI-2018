@@ -1,4 +1,12 @@
-<?php session_start();
+<?php
+/**
+ * Author: Tom Ryser
+ * Date: 22.05.2018
+ * Version : 1.0
+ * Title : updateUser
+ * Description : contain a form with all the information of the user, so he can modify it.
+ */
+session_start();
 if(!isset($_SESSION['userId']))header("location: login.php");
 require_once('..\php\fonctionsBD_update.php');
 
@@ -17,7 +25,7 @@ if (isset($_POST['submit'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">

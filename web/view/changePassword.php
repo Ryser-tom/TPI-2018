@@ -1,4 +1,12 @@
-<?php session_start();
+<?php
+/**
+ * Author: Tom Ryser
+ * Date: 22.05.2018
+ * Version : 1.0
+ * Title : changePassword
+ * Description : contain a form with 3 fields to update the password
+ */
+session_start();
 if(!isset($_SESSION['userId']))header("location: login.php");
 require_once('..\php\fonctionsBD_update.php');
 try{
@@ -23,13 +31,13 @@ catch(exception $e){
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content=" Site de E-commerce">
+  <meta name="description" content="RedLoca">
   <meta name="author" content="Tom Ryser">
 
   <title>Modification du mot de passe - RedLoca</title>

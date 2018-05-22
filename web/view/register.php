@@ -28,13 +28,13 @@ if (isset($_POST['submit'])) {
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content=" Site de E-commerce">
+  <meta name="description" content="RedLoca">
   <meta name="author" content="Tom Ryser">
 
-  <title>Inscription</title>
+  <title>Inscription - RedLoca</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
   
   <link href="../css/style.css" rel="stylesheet">
 
@@ -113,24 +113,20 @@ if (isset($_POST['submit'])) {
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
-    <p class="m-0 text-center text-white">Copyright &copy; E-commerce 2018</p>
+    <p class="m-0 text-center text-white">RedLoca CFPT-I 2018</p>
     </div>
     <!-- /.container -->
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="../jquery/jquery.min.js"></script>
-  <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Plugin JavaScript -->
-  <script src="../jquery-easing/jquery.easing.min.js"></script>
+  <script src="../jquery/jquery.js"></script>
+  <script src="../bootstrap/js/bootstrap.bundle.js"></script>
 
   <!-- Custom JavaScript for this theme -->
   <script src="../js/scrolling-nav.js"></script>
   
   <!-- plugin jQuery : jquery-validation -->
-  <script src="../jquery-validation-1.17.0/dist/jquery.validate.js"></script>
-
+  <script src="../jquery/jquery-validation-1.17.0/dist/jquery.validate.js"></script>
   <script src="../js/validate-register.js"></script>
 
 </body>

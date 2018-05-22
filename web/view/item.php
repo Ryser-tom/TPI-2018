@@ -18,10 +18,10 @@ if ($vehicle == null) {
     <meta name="description" content=" Site de E-commerce">
   <meta name="author" content="Tom Ryser">
 
-    <title>Liste des véhicules</title>
+    <title>Liste des véhicules - RedLoca</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <link href="../css/style.css" rel="stylesheet">
 
@@ -93,7 +93,7 @@ if ($vehicle == null) {
     <!-- Footer -->
 <footer class="py-5 bg-dark">
   <div class="container">
-  <p class="m-0 text-center text-white">Copyright &copy; E-commerce 2018</p>
+  <p class="m-0 text-center text-white">RedLoca CFPT-I 2018</p>
   </div>
 </footer>
 
@@ -162,10 +162,10 @@ if ($vehicle == null) {
 
 <!-- Bootstrap core JavaScript -->
 <script src="../jquery/jquery.min.js"></script>
-<script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../bootstrap/js/bootstrap.bundle.js"></script>
 
 <!-- Plugin JavaScript -->
-<script src="../jquery-easing/jquery.easing.min.js"></script>
+<script src="../jquery-easing/jquery.easing.js"></script>
   <!-- Custom JavaScript for this theme -->
   <script src="../js/scrolling-nav.js"></script>
   <script>

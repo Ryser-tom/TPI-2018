@@ -10,7 +10,7 @@
     $url=$_SERVER['PHP_SELF'];
     $break = Explode('/', $url);
     $file = $break[count($break) - 1];
-    $date = date('Y-m-d');
+    $date = date('Y-m-d', strtotime(' +1 day'));
     if(!isset($_GET['search'])){
         $search = $date;
     }else{

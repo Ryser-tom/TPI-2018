@@ -12,14 +12,18 @@ function deleteVehicle($idVehicle)
 }
 
 /* Fonction permettant de mettre à jour un type de catégorie */
-function cancelReservation($vehicleId, $userId)
+function cancelReservation($vehicleId, $userId, $startDate, $endDate)
 {
     $connexion = getConnexion();
     $request = $connexion->prepare("DELETE FROM `reservation` 
         WHERE `reservation`.`vehicules_idVehicule` = :vehicleId 
-        AND `reservation`.`utilisateurs_idUtilisateur` = :userId ");
+        AND `reservation`.`utilisateurs_idUtilisateur` = :userId 
+        AND `reservation`.`dateDebut` = :startDate
+        AND `reservation`.`dateFin` = :endDate");
     $request->bindParam(':vehicleId', $vehicleId, PDO::PARAM_INT);
     $request->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $request->bindParam(':startDate', $startDate, PDO::PARAM_STR);
+    $request->bindParam(':endDate', $endDate, PDO::PARAM_STR);
     $request->execute();
     return true;
 }

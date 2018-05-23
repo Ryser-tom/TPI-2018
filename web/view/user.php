@@ -118,7 +118,12 @@ $userVehicle = getVehicleOf($_SESSION['userId']);
                             <td>".$value['marque']."</td>
                             <td>".$value['model']."</td>
                             <td>".$value['dateDebut']." à ".$value['dateFin']."</td>
-                            <td><button type=\"button\" class=\"btn btn-warning\" onclick=\"window.location.href='user.php?vehicleId=".$value['idVehicule']."&startDate=".$value['dateDebut']."&endDate=".$value['dateFin']."'\">annuler</button></td>
+                            ";
+                            if($value['dateDebut']>date('Y-m-d')){
+                                echo"
+                            <td><button type=\"button\" class=\"btn btn-warning\" onclick=\"window.location.href='user.php?vehicleId=".$value['idVehicule']."&startDate=".$value['dateDebut']."&endDate=".$value['dateFin']."'\">annuler</button></td>";
+                            }
+                            echo"
                         </tr>
                     ";    
                 }

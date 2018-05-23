@@ -6,7 +6,7 @@ function login($email, $password)
 {
     $password = sha1($password);
     $connexion = getConnexion();
-    $request = $connexion->prepare("SELECT * FROM `utilisateurs` WHERE email = :email AND mdp = :password");
+    $request = $connexion->prepare("SELECT * FROM `utilisateurs` WHERE email = :email AND mdp = :password;");
     $request->bindParam(':email', $email, PDO::PARAM_STR);
     $request->bindParam(':password', $password, PDO::PARAM_STR);
     $request->execute();
@@ -17,7 +17,7 @@ function login($email, $password)
 function getUser($userId)
 {
     $connexion = getConnexion();
-    $request = $connexion->prepare("SELECT * FROM `utilisateurs` WHERE idUtilisateur = :userId");
+    $request = $connexion->prepare("SELECT * FROM `utilisateurs` WHERE idUtilisateur = :userId;");
     $request->bindParam(':userId', $userId, PDO::PARAM_STR);
     $request->execute();
     return $request->fetchAll(PDO::FETCH_ASSOC);
@@ -28,19 +28,6 @@ function getAllUsers()
 {
     $connexion = getConnexion();
     $request = $connexion->prepare("SELECT * FROM `utilisateurs`");
-    $request->execute();
-    return $request->fetchAll(PDO::FETCH_ASSOC);
-}
-
-
-function getRecentVehicle(){
-    $connexion = getConnexion();
-    $request = $connexion->prepare("SELECT vehicules.*, categories.nomCategorie FROM redloca.vehicules 
-    INNER JOIN categories ON categories.idcategorie = vehicules.categories_idcategorie
-    WHERE dateFinDisponibilite > current_date() 
-    OR dateFinDisponibilite IS null 
-    AND dateDebutDisponibilite < current_date() 
-    ORDER BY dateDebutDisponibilite;");
     $request->execute();
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -99,23 +86,23 @@ function getRecentVehicleAvaible(){
     $request = $connexion->prepare("SELECT idVehicule, marque, model, nbPlace, couleur, image, 
         vehicules.dateDebutDisponibilite, vehicules.dateDebutDisponibilite, categories.nomCategorie AS categorie, 
         reservation.dateDebut, reservation.dateFin
-	FROM redloca.vehicules
-	INNER JOIN categories ON vehicules.categories_idcategorie = categories.idcategorie
-	LEFT JOIN reservation ON reservation.vehicules_idVehicule = vehicules.idVehicule
-    WHERE dateDebutDisponibilite <= current_date()
-	AND (dateFinDisponibilite >= current_date()
-	    OR dateFinDisponibilite  is NULL)
-    AND ((reservation.dateDebut < current_date() AND reservation.dateFin < current_date())
-		OR reservation.dateDebut > current_date()
+    FROM redloca.vehicules
+    INNER JOIN categories ON vehicules.categories_idcategorie = categories.idcategorie
+    LEFT JOIN reservation ON reservation.vehicules_idVehicule = vehicules.idVehicule
+    WHERE dateDebutDisponibilite <= current_date()+1
+    AND (dateFinDisponibilite >= current_date()+1
+        OR dateFinDisponibilite  is NULL)
+    AND ((reservation.dateDebut < current_date()+1 AND reservation.dateFin < current_date()+1)
+        OR reservation.dateDebut > current_date()+1
         OR (reservation.dateDebut IS NULL AND reservation.dateFin IS NULL))
-	GROUP BY vehicules.idVehicule
-	ORDER BY dateDebutDisponibilite DESC
+    GROUP BY vehicules.idVehicule
+    ORDER BY dateDebutDisponibilite DESC
     LIMIT 6;");
   $request->execute();
   return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-
+/* Fonction permettant de vérifier que l'utilisateur existe.  */
 function getVehicleInfosReservation($idVehicule, $reservationDate)
 {
     $reservationDate = strtotime($reservationDate);

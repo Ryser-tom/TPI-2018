@@ -56,8 +56,7 @@ function updatePassword($newPassword, $oldPassword, $userId)
     $connexion = getConnexion();
     $request = $connexion->prepare("UPDATE `redloca`.`utilisateurs` 
         SET `mdp`= :newPassword 
-        WHERE `idUtilisateur`= :userId AND `mdp`= :oldPassword
-        ;");
+        WHERE `idUtilisateur`= :userId AND `mdp`= :oldPassword;");
     $request->bindParam(':newPassword', $newPassword, PDO::PARAM_STR);
     $request->bindParam(':oldPassword', $oldPassword, PDO::PARAM_STR);
     $request->bindParam(':userId', $userId, PDO::PARAM_INT);

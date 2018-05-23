@@ -146,15 +146,15 @@ $class = getClass();
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="image">image</label>
-      <input enctype="multipart/form-data" type="file" class="form-control" id="image" name="image" accept="image/x-png,image/gif,image/jpeg"/>
+      <input enctype="multipart/form-data" type="file" class="form-control" id="image" name="image" accept="image/x-png,image/gif,image/jpeg,image/jpg"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="start">date de début de disponibilité</label>
-      <input type="date" class="form-control" id="start" name="start" min="<?= date('Y-m-d');?>"/>
+      <input type="date" class="form-control" id="start" name="start" min="<?= date('Y-m-d',strtotime("+ 1 days"));?>"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="end">date de fin de disponibilité</label>
-      <input type="date" class="form-control" id="end" name="end" min="<?= date ( 'Y-m-j', strtotime('+1 day' , strtotime($date)));?>"/>
+      <input type="date" class="form-control" id="end" name="end" min=""/>
      </div>
      <div class="form-group">
       <div>

@@ -1,4 +1,4 @@
-$("#start").change(function() {
+$("#start").change(function() {	
 	$("#end").attr({
 		"min" : $("#start").val()
 	});
@@ -37,7 +37,6 @@ $.validator.setDefaults( {
 					},
 					color: {
 						required: true,
-						lettersonly: true
 					},
 					image: {
 						required: true
@@ -70,7 +69,6 @@ $.validator.setDefaults( {
 					},
 					color: {
 						required: "Veuillez entrer le nom de la couleur du véhicule",
-						lettersonly: "la couleur ne peux pas contenir de chiffres",
 					},
 					image: {
 						required: "Veuillez choisir une photo du véhicule"

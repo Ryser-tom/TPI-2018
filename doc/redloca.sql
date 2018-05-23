@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 18 mai 2018 à 14:36
+-- Généré le :  mer. 23 mai 2018 à 22:59
 -- Version du serveur :  5.7.21
 -- Version de PHP :  7.2.4
 
@@ -72,18 +72,10 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   `dateFin` date NOT NULL,
   `vehicules_idVehicule` int(11) NOT NULL,
   `utilisateurs_idUtilisateur` int(11) NOT NULL,
-  PRIMARY KEY (`utilisateurs_idUtilisateur`,`vehicules_idVehicule`),
+  PRIMARY KEY (`dateDebut`,`dateFin`,`vehicules_idVehicule`,`utilisateurs_idUtilisateur`),
   KEY `fk_reservation_utilisateurs1_idx` (`utilisateurs_idUtilisateur`),
   KEY `fk_reservation_vehicules_idx` (`vehicules_idVehicule`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `reservation`
---
-
-INSERT INTO `reservation` (`dateDebut`, `dateFin`, `vehicules_idVehicule`, `utilisateurs_idUtilisateur`) VALUES
-('2018-05-08', '2018-07-10', 5, 2),
-('2018-05-08', '2018-06-07', 2, 3);
 
 -- --------------------------------------------------------
 
@@ -145,7 +137,7 @@ INSERT INTO `utilisateurs` (`idUtilisateur`, `nom`, `prenom`, `dateNaissance`, `
 DROP TABLE IF EXISTS `vehicules`;
 CREATE TABLE IF NOT EXISTS `vehicules` (
   `idVehicule` int(11) NOT NULL AUTO_INCREMENT,
-  `immatriculation` varchar(10) NOT NULL,
+  `immatriculation` varchar(15) NOT NULL,
   `marque` varchar(45) NOT NULL,
   `model` varchar(45) NOT NULL,
   `nbPlace` int(11) NOT NULL,
@@ -159,26 +151,20 @@ CREATE TABLE IF NOT EXISTS `vehicules` (
   UNIQUE KEY `idVehicule_UNIQUE` (`idVehicule`),
   KEY `fk_vehicules_utilisateurs1_idx` (`utilisateurs_idutilisateur`),
   KEY `fk_vehicules_categories1_idx` (`categories_idCategorie`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `vehicules`
 --
 
 INSERT INTO `vehicules` (`idVehicule`, `immatriculation`, `marque`, `model`, `nbPlace`, `couleur`, `image`, `dateDebutDisponibilite`, `dateFinDisponibilite`, `utilisateurs_idutilisateur`, `categories_idCategorie`) VALUES
-(1, 'GE 999 999', 'audi', 'R8', 2, 'rouge', '5afe759199145.jpg', '2018-04-10', NULL, 1, 1),
-(2, 'GE 321 321', 'Yamaha', 'Fz6n', 2, 'noir', '5afe759199145.jpg', '2018-03-01', '2018-08-10', 1, 14),
-(4, 'GE 456 789', 'Audi', 'R8', 2, 'Orange', '5afe759199145.jpg', '2018-08-08', NULL, 2, 1),
-(5, 'GE 999 999', 'audi', 'R8', 2, 'rouge', '5afe759199145.jpg', '2018-05-08', NULL, 1, 1),
-(6, 'GE 999 999', 'audi', 'R8', 2, 'rouge', '5afe759199145.jpg', '2018-04-10', NULL, 1, 1),
-(7, 'GE 321 321', 'Yamaha', 'Fz6n', 2, 'noir', '5afe759199145.jpg', '2018-03-01', '2018-08-10', 1, 14),
-(8, 'GE 999 999', 'audi', 'R8', 2, 'rouge', '5afe759199145.jpg', '2018-05-08', NULL, 1, 1),
-(12, 'GE 987 654', 'Honda', 'YZF-10&#39;000', 15, 'Rouge', '5afe759199145.jpg', '2018-05-18', '2018-05-18', 1, 8),
-(13, 'GE 987 654', 'Honda', 'YZF-10&#39;000', 15, 'Rouge', '5afe759199145.jpg', '2018-05-18', '2018-05-18', 1, 8),
-(14, 'GE 987 654', 'Honda', 'YZF-10&#39;000', 15, 'Rouge', '5afe759199145.jpg', '2018-05-18', '2018-05-18', 1, 8),
-(15, 'GE 987 654', 'Honda', 'YZF-10&#39;000', 15, 'Rouge', '5afe759199145.jpg', '2018-05-18', '2018-05-18', 1, 8),
-(16, 'GE 987 654', 'Honda', 'YZF-10&#39;000', 15, 'Rouge', '5afe759199145.jpg', '2018-05-18', '2018-05-18', 1, 8),
-(17, 'GE 987 654', 'Honda', 'YZF-10&#39;000', 15, 'Rouge', '5afe759199145.jpg', '2018-05-18', '2018-05-18', 1, 8);
+(29, 'GE123456', 'VW', 'conserve', 7, 'gris', '5b05ed89ebf0d.jpg', '2018-05-24', NULL, 1, 1),
+(30, 'GE 111 111', 'mustang', 'fusée', 2, 'vertElectrique', '5b05ef7e4cf49.jpg', '2018-05-25', '2018-05-31', 1, 1),
+(31, 'VD 987654', 'alpha', 'roméo', 4, 'noir', '5b05efba58d18.jpg', '2018-05-29', '2018-06-08', 1, 6),
+(32, '123456', 'audi', 'prototype', 2, 'noire et bleu', '5b05eff6cb424.jpg', '2018-05-24', NULL, 1, 1),
+(33, 'VF 456 654', 'gag', 'bolide', 15, 'rouge cramoisie', '5b05f0897e88c.jpg', '2018-05-24', NULL, 1, 1),
+(34, 'GE 000 000', 'IA', 'mini limousine', 6, 'black', '5b05f10dce5b8.jpg', '2018-05-24', '2019-05-29', 1, 3),
+(35, 'FR 159 951', 'VW', 'retro', 2, 'grise', '5b05f13f20383.jpg', '2018-05-24', '2018-10-18', 1, 1);
 
 --
 -- Contraintes pour les tables déchargées

@@ -12,19 +12,33 @@ if($_SESSION['type'] != 1)header("location: index.php");
 require_once('..\php\fonctionsBD_update.php');
 require_once('..\php\fonctionsBD_select.php');
 $user = getUser($_GET['userId'])[0];
-if (isset($_POST['submit'])) {
-  if ((!empty($_POST['lastName'])) && (!empty($_POST['firstName'])) && (!empty($_POST['email'])) && (!empty($_POST['mobile'])) && (!empty($_POST['birthDate']))) {
-    $lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
-    $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $mobile = filter_input(INPUT_POST, 'mobile', FILTER_SANITIZE_STRING);
-    $birthDate = filter_input(INPUT_POST, 'birthDate', FILTER_SANITIZE_STRING);
-    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-        if(adminUpdateUser($lastName, $firstName, $birthDate, $mobile, $email, $password, $_GET['userId'], $user['mdp'])){
-          $user = getUser($_GET['userId'])[0];    
-        }
-  } else {
-      echo "Veuillez remplir tous les champs";
+try{
+  if (isset($_POST['submit'])) {
+    if ((!empty($_POST['lastName'])) && (!empty($_POST['firstName'])) && (!empty($_POST['email'])) && (!empty($_POST['mobile'])) && (!empty($_POST['birthDate']))) {
+      $lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
+      $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
+      $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+      $mobile = filter_input(INPUT_POST, 'mobile', FILTER_SANITIZE_STRING);
+      $birthDate = filter_input(INPUT_POST, 'birthDate', FILTER_SANITIZE_STRING);
+      $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+          if(adminUpdateUser($lastName, $firstName, $birthDate, $mobile, $email, $password, $_GET['userId'], $user['mdp'])){
+            $user = getUser($_GET['userId'])[0];
+            throw new exception("TRUE");
+            }else{
+              throw new exception("FALSE");
+            }
+    } else {
+      throw new exception("Veuillez remplir tous les champs");
+    }
+  }
+}
+catch(exception $e){
+  if($e->getMessage() == "TRUE"){
+    $info = '<div class="alert alert-success">Vos modification ont été enregistrée avec succès.</div>';
+  }elseif($e->getMessage() == "FALSE"){
+    $info = '<div class="alert alert-warning">une erreur est survenue.</div>';
+  }else{
+    $info = '<div class="alert alert-warning">'.$e->getMessage().'</div>';
   }
 }
 ?>
@@ -62,6 +76,11 @@ if (isset($_POST['submit'])) {
    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2">
     <form id="adminUpdateUserForm" action="adminUpdateUser.php?userId=<?=$user['idUtilisateur']?>" method="POST">
      <div class="form-group ">
+     <?php
+        if(isset($info)){
+            echo $info;
+        }
+      ?>
       <label class="control-label requiredField" for="lastName">
        Nom
       </label>
@@ -93,7 +112,7 @@ if (isset($_POST['submit'])) {
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="password">
-       Mot de passe
+       mot de passe (n'entrez un mot de passe que si vous désirez le changer.)
       </label>
       <input type="password" class="form-control" id="password" name="password" placeholder="********"/>
      </div>

@@ -15,6 +15,7 @@ function register($lastName, $firstName, $birthDate, $mobile, $Email, $password)
   $request->bindParam(':email', $Email, PDO::PARAM_STR);
   $request->bindParam(':mdp', $password, PDO::PARAM_STR);
   $request->execute();
+  return $request;
 }
 
 /* fonction permettant d'ajouter un vehicule à la base de donnée */
@@ -37,28 +38,6 @@ function addVehicle($numberPlate, $mark, $model, $class, $nbPlaces, $color, $ima
   return $request;
 }
 
-/* fonction permettant d'ajouter un type de catégorie à la base de donnée */
-function addTypeCategory($type)
-{
-  $connexion = getConnexion();
-  $request = $connexion->prepare("INSERT INTO `redloca`.`type_categories` (`nomTypeCategorie`) 
-    VALUES (:type);");
-  $request->bindParam(':type', $type, PDO::PARAM_STR);
-  $request->execute();
-}
-
-/* fonction permettant d'ajouter une catégorie à la base de donnée */
-function addCategory($nomCategorie, $PrixCategory, $typeCategorie)
-{
-  $connexion = getConnexion();
-  $request = $connexion->prepare("INSERT INTO `redloca`.`categories` (`nomCategorie`, `prixCategorie`, `type_categories_idTypeCategorie`) 
-    VALUES (:nomCategorie, :PrixCategory, :typeCategorie);");
-  $request->bindParam(':nomCategorie', $nomCategorie, PDO::PARAM_STR);
-  $request->bindParam(':PrixCategory', $PrixCategory, PDO::PARAM_INT);
-  $request->bindParam(':typeCategorie', $typeCategorie, PDO::PARAM_INT);
-  $request->execute();
-}
-
 /* fonction permettant d'ajouter une catégorie à la base de donnée */
 function addReservation($userId, $vehicleId, $startDate, $endDate)
 {
@@ -70,6 +49,7 @@ function addReservation($userId, $vehicleId, $startDate, $endDate)
   $request->bindParam(':vehicleId', $vehicleId, PDO::PARAM_INT);
   $request->bindParam(':userId', $userId, PDO::PARAM_INT);
   $request->execute();
+  return $request;
 }
 
 ?>

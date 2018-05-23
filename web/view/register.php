@@ -9,7 +9,7 @@
 session_start();
 if(isset($_SESSION['userId']))header("location: index.php");
 require_once('..\php\fonctionsBD_insert.php');
-
+try{
 if (isset($_POST['submit'])) {
   if ((!empty($_POST['lastName'])) && (!empty($_POST['firstName'])) && (!empty($_POST['email'])) && (!empty($_POST['mobile'])) && (!empty($_POST['birthDate'])) && (!empty($_POST['password'])) && (!empty($_POST['confirmPassword']))) {
     $lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
@@ -20,12 +20,21 @@ if (isset($_POST['submit'])) {
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
     $confirmPassword = filter_input(INPUT_POST, 'confirmPassword', FILTER_SANITIZE_STRING);
     if($password == $confirmPassword){
-    register($lastName, $firstName, $birthDate, $mobile, $email, $password);
-    echo "Succès";
+    $result = register($lastName, $firstName, $birthDate, $mobile, $email, $password);
+    header("location: login.php?result=true");
+    exit;
     //mot de passe pas identique
     }
   } else {
       echo "Veuillez remplir tous les champs";
+  }
+}
+}
+catch(exception $e){
+  if($e->getCode() == "23000"){
+    $error = '<div class="alert alert-warning" role="alert">Email deja utilisé</div>';
+  }else{
+    $error = '<div class="alert alert-warning" role="alert">'.$e.'</div>';
   }
 }
 ?>
@@ -63,6 +72,11 @@ if (isset($_POST['submit'])) {
    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2">
     <form id="registerForm" action="register.php" method="POST">
      <div class="form-group ">
+     <?php
+        if(isset($error)){
+          echo$error;
+        }
+      ?>
       <label class="control-label requiredField" for="lastName">
        Nom
       </label>

@@ -5,4 +5,5 @@ session_abort();
 
 
 header("location: ../view/index.php");
+exit;
 ?>

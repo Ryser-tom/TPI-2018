@@ -86,7 +86,7 @@ $userVehicle = getVehicleOf($_SESSION['userId']);
                 foreach ($userVehicle as &$value) {
                     echo"
                         <tr>
-                            <td><a href=\"editVehicle?vehicleId=".$value['idVehicule']."\">".$value['immatriculation']."<a></td>
+                            <td><a href=\"updateVehicle?vehicleId=".$value['idVehicule']."\">".$value['immatriculation']."<a></td>
                             <td>".$value['marque']."</td>
                             <td>".$value['model']."</td>
                             <td>".$value['dateDebutDisponibilite']." à ".$value['dateDebutDisponibilite']."</td>
@@ -114,7 +114,7 @@ $userVehicle = getVehicleOf($_SESSION['userId']);
                 foreach ($userReservation as &$value) {
                     echo"
                         <tr>
-                            <td><a href=\"editVehicle?vehicleId=".$value['idVehicule']."\">".$value['immatriculation']."<a></td>
+                            <td>".$value['immatriculation']."</td>
                             <td>".$value['marque']."</td>
                             <td>".$value['model']."</td>
                             <td>".$value['dateDebut']." à ".$value['dateFin']."</td>

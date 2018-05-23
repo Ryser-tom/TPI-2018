@@ -12,6 +12,8 @@ function login($email, $password)
     $request->execute();
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
+
+/* Fonction permettant de vérifier que l'utilisateur existe.  */
 function getUser($userId)
 {
     $connexion = getConnexion();
@@ -20,6 +22,7 @@ function getUser($userId)
     $request->execute();
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
+
 /* Fonction permettant de vérifier que l'utilisateur existe.  */
 function getAllUsers()
 {
@@ -29,7 +32,7 @@ function getAllUsers()
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* fonction permettant de récuperer la liste des véhicules récement ajouter */
+
 function getRecentVehicle(){
     $connexion = getConnexion();
     $request = $connexion->prepare("SELECT vehicules.*, categories.nomCategorie FROM redloca.vehicules 
@@ -42,7 +45,7 @@ function getRecentVehicle(){
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de récuperer la liste de tous les véhicules disponible trié par ordre chronologique de disponibilité. */ 
+/* Fonction permettant de vérifier que l'utilisateur existe.  */
 function getAllVehicles(){
     $connexion = getConnexion();
     $request = $connexion->prepare("SELECT idVehicule, immatriculation, marque, model, nbPlace, 
@@ -54,7 +57,7 @@ function getAllVehicles(){
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de récuperer la liste de tous les véhicules disponible trié par ordre chronologique de disponibilité. */ 
+/* Fonction permettant de vérifier que l'utilisateur existe.  */
 function getAllVehiclesAvaible($dateResearch){
     $dateResearch = strtotime($dateResearch);
     $dateResearch = date('Y-m-d H:i:s', $dateResearch);
@@ -79,7 +82,7 @@ function getAllVehiclesAvaible($dateResearch){
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de récuperer la liste de tous les véhicules disponible trié par ordre chronologique de disponibilité. */ 
+/* Fonction permettant de vérifier que l'utilisateur existe.  */
 function getVehicleOf($userId){
     $connexion = getConnexion();
     $request = $connexion->prepare("SELECT * FROM redloca.vehicules 
@@ -90,28 +93,29 @@ function getVehicleOf($userId){
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de récuperer la liste des véhicules disponible à une date choisi et trié par catégorie */ 
+/* Fonction permettant de vérifier que l'utilisateur existe.  */
 function getRecentVehicleAvaible(){
     $connexion = getConnexion();
-    $request = $connexion->prepare("SELECT idVehicule, marque, model, nbPlace, couleur, image, vehicules.dateDebutDisponibilite, vehicules.dateDebutDisponibilite, categories.nomCategorie AS categorie, reservation.dateDebut, reservation.dateFin
+    $request = $connexion->prepare("SELECT idVehicule, marque, model, nbPlace, couleur, image, 
+        vehicules.dateDebutDisponibilite, vehicules.dateDebutDisponibilite, categories.nomCategorie AS categorie, 
+        reservation.dateDebut, reservation.dateFin
 	FROM redloca.vehicules
 	INNER JOIN categories ON vehicules.categories_idcategorie = categories.idcategorie
 	LEFT JOIN reservation ON reservation.vehicules_idVehicule = vehicules.idVehicule
     WHERE dateDebutDisponibilite <= current_date()
 	AND (dateFinDisponibilite >= current_date()
-	OR dateFinDisponibilite  is NULL)
+	    OR dateFinDisponibilite  is NULL)
     AND ((reservation.dateDebut < current_date() AND reservation.dateFin < current_date())
 		OR reservation.dateDebut > current_date()
         OR (reservation.dateDebut IS NULL AND reservation.dateFin IS NULL))
 	GROUP BY vehicules.idVehicule
 	ORDER BY dateDebutDisponibilite DESC
-    LIMIT 6;"
-        );
+    LIMIT 6;");
   $request->execute();
   return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* fonction permettant de récuperer les information sur le vehicule */
+
 function getVehicleInfosReservation($idVehicule, $reservationDate)
 {
     $reservationDate = strtotime($reservationDate);
@@ -130,11 +134,11 @@ function getVehicleInfosReservation($idVehicule, $reservationDate)
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* fonction permettant de récuperer les information sur le vehicule */
+/* Fonction permettant de vérifier que l'utilisateur existe.  */
 function getVehicleInfos($idVehicule)
 {
     $connexion = getConnexion();
-    $request = $connexion->prepare("SELECT categories.nomCategorie, categories.prixCategorie, vehicules.image, vehicules.marque, vehicules.model, vehicules.nbPlace, vehicules.couleur, vehicules.dateFinDisponibilite AS finDisponibilite
+    $request = $connexion->prepare("SELECT categories.nomCategorie, categories.prixCategorie, vehicules.immatriculation, vehicules.image, vehicules.marque, vehicules.model, vehicules.nbPlace, vehicules.couleur, vehicules.dateDebutDisponibilite AS debutDisponibilite, vehicules.dateFinDisponibilite AS finDisponibilite
     FROM redloca.vehicules
     INNER JOIN categories ON vehicules.categories_idcategorie = categories.idcategorie
     WHERE idVehicule = :idVehicule;");
@@ -143,23 +147,7 @@ function getVehicleInfos($idVehicule)
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de récuperer les données pour afficher un résumé avant confirmation.  */
-function getResume($dateDebut, $dateFin, $idVehicule)
-{
-    $connexion = getConnexion();
-    $request = $connexion->prepare("SELECT (DATEDIFF(':dateFin', ':dateDebut') * categories.prixCategorie) AS 'prixLocation', 
-      vehicules.image, vehicules.couleur, vehicules.marque, vehicules.modele, vehicules.nbPlace
-      FROM redloca.vehicules 
-      INNER JOIN categories ON vehicules.categories_idcategorie = categories.idcategorie
-      WHERE vehicules.idVehicule = ':idVehicule';");
-    $request->bindParam(':dateDebut', $dateDebut, PDO::PARAM_STR);
-    $request->bindParam(':dateFin', $dateFin, PDO::PARAM_STR);
-    $request->bindParam(':idVehicule', $idVehicule, PDO::PARAM_INT);
-    $request->execute();
-    return $request->fetchAll(PDO::FETCH_ASSOC);
-}
-
-/* Fonction permettant de récuperer les catégories avec le nom du type de catégorie  */
+/* Fonction permettant de vérifier que l'utilisateur existe.  */
 function getClass()
 {
     $connexion = getConnexion();
@@ -169,32 +157,27 @@ function getClass()
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de récuperer les types de catégories  */
-function getTypeCategory()
+/* Fonction permettant de vérifier que l'utilisateur existe.  */
+function getAllReservations()
 {
     $connexion = getConnexion();
-    $request = $connexion->prepare("SELECT * FROM redloca.type_categories;");
+    $request = $connexion->prepare("SELECT dateDebut, dateFin, utilisateurs.nom, utilisateurs.prenom, vehicules.immatriculation, vehicules.idVehicule 
+        FROM redloca.reservation
+        INNER JOIN utilisateurs ON utilisateurs.idUtilisateur = reservation.utilisateurs_idutilisateur
+        INNER JOIN vehicules ON vehicules.idVehicule = reservation.Vehicules_idVehicule;");
     $request->execute();
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de récuperer les réservation  */
-function getAllReservation()
-{
-    $connexion = getConnexion();
-    $request = $connexion->prepare("SELECT * FROM redloca.reservation;");
-    $request->execute();
-    return $request->fetchAll(PDO::FETCH_ASSOC);
-}
-
-/* Fonction permettant de récuperer les réservation d'un utilisateur */
+/* Fonction permettant de vérifier que l'utilisateur existe.  */
 function getReservationOf($idUtilisateur)
 {
     $connexion = getConnexion();
-    $request = $connexion->prepare("SELECT immatriculation, dateDebut, dateFin, vehicules.marque, vehicules.model, vehicules.idVehicule FROM redloca.reservation
-      INNER JOIN utilisateurs ON reservation.utilisateurs_idutilisateur = utilisateurs.idutilisateur
-      INNER JOIN vehicules ON reservation.Vehicules_idVehicule = vehicules.idVehicule
-      WHERE utilisateurs.idutilisateur = :idUtilisateur;");
+    $request = $connexion->prepare("SELECT immatriculation, dateDebut, dateFin, vehicules.marque, vehicules.model, vehicules.idVehicule 
+        FROM redloca.reservation
+        INNER JOIN utilisateurs ON reservation.utilisateurs_idutilisateur = utilisateurs.idutilisateur
+        INNER JOIN vehicules ON reservation.Vehicules_idVehicule = vehicules.idVehicule
+        WHERE utilisateurs.idutilisateur = :idUtilisateur;");
     $request->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
     $request->execute();
     return $request->fetchAll(PDO::FETCH_ASSOC);

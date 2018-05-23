@@ -16,18 +16,19 @@ try{
       $newPassword = filter_input(INPUT_POST, 'newPassword', FILTER_SANITIZE_STRING);
       $confirmPassword = filter_input(INPUT_POST, 'confirmPassword', FILTER_SANITIZE_STRING);
       if ($newPassword == $confirmPassword) {
-        updatePassword($newPassword, $actualPassword, $_SESSION['userId']);
+        if(updatePassword($newPassword, $actualPassword, $_SESSION['userId'])){
+          throw new Exception('<div class="alert alert-success">Votre mot de passe a été changé avec succès.</div>');
+        }
       }else{
-        throw new Exception('erreur dans la base de donées');
+        throw new Exception('<div class="alert alert-warning">erreur dans la base de donées.</div>');
       }
-      header("location: index.php");
     } else {
-        throw new Exception('vous devez remplir tout les champs');
+        throw new Exception('<div class="alert alert-warning">vous devez remplir tout les champs.</div>');
     }
   }
 }
 catch(exception $e){
-  echo $e->getMessage();
+  $info = $e->getMessage();
 }
 ?>
 <!DOCTYPE html>
@@ -62,6 +63,9 @@ catch(exception $e){
  <div class="container-fluid">
   <div class="row">
    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2">
+   <?php
+      if(isset($info)){echo $info;}
+    ?>
     <form id="updatePasswordForm" action="changePassword.php" method="POST">
      <div class="form-group ">
       <label class="control-label requiredField" for="actualPassword">

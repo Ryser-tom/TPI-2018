@@ -1,3 +1,9 @@
+$("#start").change(function() {
+	$("#end").attr({
+		"min" : $("#start").val()
+	});
+  });
+
 $.validator.setDefaults( {
 			submitHandler: function () {
 				form.submit();
@@ -9,53 +15,56 @@ $.validator.setDefaults( {
 		}, "Letters only please" ); 
 
 		$( document ).ready( function () {
-			$( "#adminUpdateUserForm" ).validate( {
+			$( "#updateVehicle" ).validate( {
 				rules: {
-					firstName: {
+					numberPlate: {
+						required: true,
+					},
+					mark: {
+						required: true,
+						lettersonly: true
+					},
+					model: {
 						required: true
 					},
-					lastName: {
+					nbPlaces: {
+						required: true,
+						number: true
+					},
+					color: {
+						required: true,
+						lettersonly: true
+					},
+					start: {
 						required: true
 					},
-					email: {
-						required: true,
-						email: true
-					},
-					mobile: {
-						required: true,
-						rangelength: [4, 12]
-					},
-					birthDate: {
-						required: true,
-						date: true
-					},
-					password: {
-						required: false,
-						minlength: 8
+					end: {
+						required: false
 					},
 				},
 				messages: {
-					firstName: {
-						required: "Veuillez entrer votre prénom"
+					numberPlate: {
+						required: "Veuillez entrer le numéro d'immatriculation du véhicule"
 					},
-					lastName: {
-						required: "Veuillez entrer votre nom"
+					mark: {
+						required: "Veuillez séléctionner une marque de véhicule",
+						lettersonly: "la marque ne peux contenir que des lettres"
 					},
-					email: {
-						required: "Veuillez entrer votre email",
-						mail: "vous devez entrer un email valide"
+					model: {
+						required: "Veuillez séléctionner un model de véhicule"
 					},
-					mobile: {
-						required: "Veuillez entrer votre numéro de natel",
-						rangelength: "veuillez entrer un nombre composé de 4 à 12 chiffres",
+					nbPlaces: {
+						required: "Veuillez entrer un nombre de place(s)",
+						number: "veuillez entrer des chiffres"
 					},
-					birthDate: {
-						required: "Veuillez entrer votre date de naissance",
-						date: "vous devez entrer une date"
+					color: {
+						required: "Veuillez entrer le nom de la couleur du véhicule",
+						lettersonly: "la couleur ne peux pas contenir de chiffres",
 					},
-					password: {
-						required: "Veuillez entrer votre mot de passe",
-						minlength: "Le mot de passe doit contenir au minimum 8 charactère"
+					start: {
+						required: "Veuillez indiquer une date à la quelle vôtre véhicule sera disponible.",
+					},
+					end: {
 					},
 				},
 				errorElement: "em",

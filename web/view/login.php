@@ -33,8 +33,9 @@ try{
   }
 }
 catch(exception $e){
-  $info = $e->getMessage();
+  $error = $e->getMessage();
 }
+if(isset($_GET['result'])){$info="l'inscription as réussi, vous pouvez vous connecter";}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -71,8 +72,10 @@ catch(exception $e){
     <form id="signupForm" action="login.php" method="POST">
      <div class="form-group ">
       <?php
-        if(isset($info)){
-          echo'<div class="alert alert-warning">'.$info.'.</div>';
+        if(isset($error)){
+          echo'<div class="alert alert-warning">'.$error.'.</div>';
+        }elseif(isset($info)){
+          echo'<div class="alert alert-success">'.$info.'.</div>';
         }
       ?>
       <label class="control-label requiredField" for="email">

@@ -3,13 +3,15 @@
  * Author: Tom Ryser
  * Date: 22.05.2018
  * Version : 1.0
- * Title : add
- * Description : Contains a form to add a vehicle to the DB.
+ * Title : editVehicle
+ * Description : Contains a form to edit a vehicle informations.
  */
 
 session_start();
 if(!isset($_SESSION['userId']))header("location: login.php");
+if(!isset($_GET['vehicleId']))header("location: index.php");
 require_once('..\php\fonctionsBD_select.php');
+$vehicle = getVehicleInfos($_GET['vehicleId'])['0'];
 try{
   if (isset($_POST['submit'])) {
     if ((!empty($_POST['numberPlate'])) && (!empty($_POST['mark'])) && (!empty($_POST['model'])) && (!empty($_POST['class'])) && (!empty($_POST['nbPlaces'])) && (!empty($_POST['color'])) && (!empty($_POST['start']))) {
@@ -19,16 +21,17 @@ try{
       $class = filter_input(INPUT_POST, 'class', FILTER_SANITIZE_NUMBER_INT);
       $nbPlaces = filter_input(INPUT_POST, 'nbPlaces', FILTER_SANITIZE_NUMBER_INT);
       $color = filter_input(INPUT_POST, 'color', FILTER_SANITIZE_STRING);
-      $image = filterImage();
+      $image = filterImage($vehicle['image']);
       $start = filter_input(INPUT_POST, 'start', FILTER_SANITIZE_STRING);
       if($_POST['end'] !== ""){
         $end = filter_input(INPUT_POST, 'end', FILTER_SANITIZE_STRING);
       }else{
         $end = NULL;
       }
-      require_once('..\php\fonctionsBD_insert.php');
-      if(addVehicle($numberPlate, $mark, $model, $class, $nbPlaces, $color, $image, $start, $end, $_SESSION['userId'])){
-        $info = '<div class="alert alert-success" role="alert">Votre véhicule as été ajouter avec succès</div>';
+      require_once('..\php\fonctionsBD_update.php');
+      if(updateVehicle($_GET['vehicleId'], $numberPlate, $mark, $model, $class, $nbPlaces, $color, $image, $start, $end, $_SESSION['userId'], $_SESSION['type'])){
+        $info = '<div class="alert alert-success" role="alert">Votre véhicule a été mis à jour avec succès</div>';
+        $vehicle = getVehicleInfos($_GET['vehicleId'])['0'];
       }else{
         throw new Exception('une erreur est survenue.');
       }
@@ -44,7 +47,7 @@ try{
   }
 }
 
-function filterImage(){
+function filterImage($imgOld){
   try{
     if($_FILES['image']['tmp_name'] != null){
       if(!empty($_FILES["image"])){
@@ -55,10 +58,12 @@ function filterImage(){
         $pieces = explode(".", $_FILES["image"]['name']);
         $imgName = (uniqid() . "." . end($pieces));
         if (!move_uploaded_file($_FILES["image"]['tmp_name'], "../mediaUser/".$imgName)) {
-          throw new Exception('le fichier n\'as pas pu être transféré.');
+          
           exit();
         }
       }
+    }else{
+      $imgName=$imgOld;
     }
   }
   catch(Exception $e){
@@ -98,7 +103,7 @@ $class = getClass();
  <div class="container-fluid">
   <div class="row">
    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2">
-    <form id="addVehicle" action="add.php" enctype="multipart/form-data" method="POST">
+    <form id="updateVehicle" action="updateVehicle.php?vehicleId=<?=$_GET['vehicleId']?>" enctype="multipart/form-data" method="POST">
      <div class="form-group ">
      <?php
         if(isset($info)){
@@ -106,30 +111,39 @@ $class = getClass();
         }
       ?>
       <label class="control-label requiredField" for="numberPlate">Immatriculation</label>
-      <input type="text" class="form-control" id="numberPlate" name="numberPlate" placeholder="GE 123 123"/>
+      <input type="text" class="form-control" id="numberPlate" name="numberPlate" placeholder="GE 123 123" value="<?=$vehicle['immatriculation']?>"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="mark">Marque</label>
-      <input type="text" class="form-control" id="mark" name="mark"/>
+      <input type="text" class="form-control" id="mark" name="mark" value="<?=$vehicle['marque']?>"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="model">Modèle</label>
-      <input type="text" class="form-control" id="model" name="model"/>
+      <input type="text" class="form-control" id="model" name="model" value="<?=$vehicle['model']?>"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="class">catégorie</label>
-      <select class="selectpicker" id="class" name="class">
+      <select class="selectpicker" id="class" name="class" >
         <?php
           echo"<optgroup label='voiture'>";
           foreach ($class as $key => $value) {
             if ($value['nomTypeCategorie'] == "voiture") {
-              echo"<option value='".$value['idCategorie']."'>".$value['nomCategorie']."</option>";
+              if($vehicle['nomCategorie']==$value['nomCategorie']){
+                echo"<option value='".$value['idCategorie']." selected'>".$value['nomCategorie']."</option>";
+              }else{
+                echo"<option value='".$value['idCategorie']."'>".$value['nomCategorie']."</option>";
+              }
+              
             }
           }
           echo"<optgroup label='moto'>";
           foreach ($class as $key => $value) {
             if ($value['nomTypeCategorie'] == "moto") {
+              if($vehicle['nomCategorie']==$value['nomCategorie']){
+                echo"<option value='".$value['idCategorie']."' selected'>".$value['nomCategorie']."</option>";
+              }else{
               echo"<option value='".$value['idCategorie']."'>".$value['nomCategorie']."</option>";
+              }
             }
           }
         ?>
@@ -138,27 +152,27 @@ $class = getClass();
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="nbPlaces">Nombre de place</label>
-      <input type="text" class="form-control" id="nbPlaces" name="nbPlaces"/>
+      <input type="text" class="form-control" id="nbPlaces" name="nbPlaces" value="<?=$vehicle['nbPlace']?>"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="color">couleur</label>
-      <input type="text" class="form-control" id="color" name="color"/>
+      <input type="text" class="form-control" id="color" name="color" value="<?=$vehicle['couleur']?>"/>
      </div>
      <div class="form-group ">
-      <label class="control-label requiredField" for="image">image</label>
+      <label class="control-label requiredField" for="image">image (ne choississez une image que si vous voulez changer l'ancienne)</label>
       <input enctype="multipart/form-data" type="file" class="form-control" id="image" name="image" accept="image/x-png,image/gif,image/jpeg"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="start">date de début de disponibilité</label>
-      <input type="date" class="form-control" id="start" name="start" min="<?= date('Y-m-d');?>"/>
+      <input type="date" class="form-control" id="start" name="start" min="" value="<?=$vehicle['debutDisponibilite']?>"/>
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="end">date de fin de disponibilité</label>
-      <input type="date" class="form-control" id="end" name="end" min="<?= date ( 'Y-m-j', strtotime('+1 day' , strtotime($date)));?>"/>
+      <input type="date" class="form-control" id="end" name="end" min="" value="<?=$vehicle['finDisponibilite']?>"/>
      </div>
      <div class="form-group">
       <div>
-        <input class="btn btn-warning " name="submit" type="submit" value="Ajouter véhicule">
+        <input class="btn btn-warning " name="submit" type="submit" value="Modifier">
       </div>
      </div>
     </form>
@@ -183,7 +197,7 @@ $class = getClass();
   
   <!-- plugin jQuery : jquery-validation -->
   <script src="../jquery/jquery-validation-1.17.0/dist/jquery.validate.js"></script>
-  <script src="../js/validate-addVehicle.js"></script>
+  <script src="../js/validate-updateVehicle.js"></script>
 
 </body>
 

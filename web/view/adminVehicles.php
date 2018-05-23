@@ -65,7 +65,7 @@ $vehicles = getAllVehicles();
                 foreach ($vehicles as &$value) {
                     echo"
                         <tr>
-                            <td><a href=\"editVehicle?idVehicle=".$value['idVehicule']."\">".$value['immatriculation']."<a></td>
+                            <td><a href=\"updateVehicle?vehicleId=".$value['idVehicule']."\">".$value['immatriculation']."<a></td>
                             <td>".$value['marque']."</td>
                             <td>".$value['model']."</td>
                             <td>".$value['nbPlace']."</td>

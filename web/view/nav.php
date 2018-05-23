@@ -43,7 +43,8 @@
                         if($_SESSION['type'] == 1){
                             echo "<div class=\"dropdown-divider\"></div>
                                 <a class=\"dropdown-item\" href=\"adminUsers.php\">Administration utilisateurs</a>
-                                <a class=\"dropdown-item\" href=\"adminVehicles.php\">Administration vehicules</a>";
+                                <a class=\"dropdown-item\" href=\"adminVehicles.php\">Administration vehicules</a>
+                                <a class=\"dropdown-item\" href=\"adminReservation.php\">Administration reservation</a>";
                         }
                         echo"
                         <div class=\"dropdown-divider\"></div>

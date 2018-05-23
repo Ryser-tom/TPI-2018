@@ -39,6 +39,15 @@ $vehicle = getRecentVehicleAvaible();
     <section id="recentlyAdded" class="bg-light">
       <div class="container">
       <?php
+        if(isset($_GET['result'])){
+          if($_GET['result'] == "true"){
+            echo'<div class="alert alert-success">Votre location as été enregistrée.</div>';
+          }else{
+            echo'<div class="alert alert-warning">une erreur est survenue.</div>';
+          }
+          
+        }
+
         $i = 0;
         foreach ($vehicle as $key => $value) {
           if($i==0)echo'<div class="row">';

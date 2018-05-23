@@ -7,8 +7,8 @@ function updateUser($lastName, $firstName, $birthDate, $mobile, $email, $passwor
     $password = sha1($password);
     $connexion = getConnexion();
     $request = $connexion->prepare("UPDATE `redloca`.`utilisateurs` 
-        SET `nom`=:lastName, `prenom`=:firstName, `dateNaissance`=:birthDate, `natel`=:mobile, `Email`=:email 
-        WHERE `idUtilisateur`= :userId AND `mdp`=:password;");
+        SET `nom` = :lastName, `prenom` = :firstName, `dateNaissance` = :birthDate, `natel` = :mobile, `Email` = :email 
+        WHERE `idUtilisateur` = :userId AND `mdp`= :password;");
     $request->bindParam(':lastName', $lastName, PDO::PARAM_STR);
     $request->bindParam(':firstName', $firstName, PDO::PARAM_STR);
     $request->bindParam(':birthDate', $birthDate, PDO::PARAM_STR);
@@ -17,9 +17,14 @@ function updateUser($lastName, $firstName, $birthDate, $mobile, $email, $passwor
     $request->bindParam(':userId', $userId, PDO::PARAM_STR);
     $request->bindParam(':password', $password, PDO::PARAM_STR);
     $request->execute();
+    if($request->rowCount()>0){
+        return $request;
+    }else{
+        throw new exception("Une erreur est survenue, les informations n'ont pas été changée");
+    }
 
 }
-
+/* Fonction permettant de mettre à jour les informations d'un vehicule */
 function adminUpdateUser($lastName, $firstName, $birthDate, $mobile, $email, $password, $userId, $actualPassword)
 {
     if ($password=="") {
@@ -40,7 +45,7 @@ function adminUpdateUser($lastName, $firstName, $birthDate, $mobile, $email, $pa
     $request->bindParam(':userId', $userId, PDO::PARAM_INT);
     $request->bindParam(':password', $password, PDO::PARAM_STR);
     $request->execute();
-
+    return $request;
 }
 
 /* Fonction permettant de mettre à jour le mot de passe */
@@ -57,7 +62,13 @@ function updatePassword($newPassword, $oldPassword, $userId)
     $request->bindParam(':oldPassword', $oldPassword, PDO::PARAM_STR);
     $request->bindParam(':userId', $userId, PDO::PARAM_INT);
     $request->execute();
+    if($request->rowCount()>0){
+        return $request;
+    }else{
+        throw new exception('<div class="alert alert-warning">le mot de passe actuel est incorrect</div>');
+    }
 }
+/* Fonction permettant de mettre à jour les informations d'un vehicule */
 function updateUserType($idUser, $actualType)
 {
     if ($actualType == 1) {
@@ -70,67 +81,39 @@ function updateUserType($idUser, $actualType)
     $request->bindParam(':idUser', $idUser, PDO::PARAM_INT);
     $request->bindParam(':newType', $newType, PDO::PARAM_INT);
     $request->execute();
+    return $request;
 }
 /* Fonction permettant de mettre à jour les informations d'un vehicule */
-function updateVehicle($immatriculation, $marque, $modele, $couleur, $image, $dateDebutDisponibilite, $dateFinDisponibilite, $idCategorie)
+function updateVehicle($vehicleId, $numberPlate, $mark, $model, $class, $nbPlaces, $color, $image, $start, $end, $userId, $type)
 {
     $connexion = getConnexion();
-    $request = $connexion->prepare("UPDATE `redloca`.`vehicules` 
-      SET `immatriculation`=':immatriculation', `marque`=':marque', `modele`=':modele', `couleur`=':couleur', `image`=':image', 
-      `dateDebutDisponibilite`=':dateDebutDisponibilite', `dateFinDisponibilite`=':dateFinDisponibilite', `categories_idcategorie`=':idCategorie' 
-      WHERE `idVehicule`='4';");
-    $request->bindParam(':immatriculation', $immatriculation, PDO::PARAM_INT);
-    $request->bindParam(':marque', $marque, PDO::PARAM_STR);
-    $request->bindParam(':modele', $modele, PDO::PARAM_STR);
-    $request->bindParam(':couleur', $couleur, PDO::PARAM_STR);
+    if($type==1){
+        $request = $connexion->prepare("UPDATE `redloca`.`vehicules` 
+            SET `immatriculation`=:numberPlate, `marque`=:mark, `model`=:model, `couleur`=:color, `image`=:image, `nbPlace`=:nbPlaces,
+                `dateDebutDisponibilite`=:start, `dateFinDisponibilite`=:end, `categories_idcategorie`=:class
+            WHERE `idVehicule`=:vehicleId");
+    }else{
+        $request = $connexion->prepare("UPDATE `redloca`.`vehicules` 
+            SET `immatriculation`=:numberPlate, `marque`=:mark, `model`=:model, `couleur`=:color, `image`=:image, `nbPlace`=:nbPlaces,
+                `dateDebutDisponibilite`=:start, `dateFinDisponibilite`=:end, `categories_idcategorie`=:class
+            WHERE `idVehicule`=:vehicleId AND `utilisateurs_idutilisateur`=:userId;");
+    }
+    $request->bindParam(':numberPlate', $numberPlate, PDO::PARAM_STR);
+    $request->bindParam(':mark', $mark, PDO::PARAM_STR);
+    $request->bindParam(':model', $model, PDO::PARAM_STR);
+    $request->bindParam(':class', $class, PDO::PARAM_INT);
+    $request->bindParam(':nbPlaces', $nbPlaces, PDO::PARAM_INT);
+    $request->bindParam(':color', $color, PDO::PARAM_STR);
     $request->bindParam(':image', $image, PDO::PARAM_STR);
-    $request->bindParam(':dateDebutDisponibilite', $dateDebutDisponibilite, PDO::PARAM_STR);
-    $request->bindParam(':dateFinDisponibilite', $dateFinDisponibilite, PDO::PARAM_STR);
-    $request->bindParam(':idCategorie', $idCategorie, PDO::PARAM_INT);
+    $request->bindParam(':start', $start, PDO::PARAM_STR);
+    $request->bindParam(':end', $end, PDO::PARAM_STR);
+    if($type==0)$request->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $request->bindParam(':vehicleId', $vehicleId, PDO::PARAM_INT);
     $request->execute();
-    return $request->fetchAll(PDO::FETCH_ASSOC);
+    if($request->rowCount()>0){
+        return $request;
+    }else{
+        throw new exception('FALSE');
+    }
 }
-
-/* Fonction permettant de mettre à jour une catégorie */
-function updateCategory($nomCategorie, $prixCategorie, $type_categories_idTypeCategorie)
-{
-    $connexion = getConnexion();
-    $request = $connexion->prepare("UPDATE `redloca`.`categories` 
-      SET `nomCategorie`=':nomCategorie', `prixCategorie`=':prixCategorie', `type_categories_idTypeCategorie`=':type_categories_idTypeCategorie' 
-      WHERE `idcategorie`='11';");
-    $request->bindParam(':nomCategorie', $nomCategorie, PDO::PARAM_STR);
-    $request->bindParam(':prixCategorie', $prixCategorie, PDO::PARAM_INT);
-    $request->bindParam(':type_categories_idTypeCategorie1', $type_categories_idTypeCategorie1, PDO::PARAM_INT);
-    $request->execute();
-    return $request->fetchAll(PDO::FETCH_ASSOC);
-}
-
-/* Fonction permettant de mettre à jour une réservation */
-function updateReservation($dateDebut, $dateFin, $idVehicule, $idUtilisateur)
-{
-    $connexion = getConnexion();
-    $request = $connexion->prepare("UPDATE `redloca`.`reservation` 
-      SET `dateDebut`=':dateDebut', `dateFin`=':dateFin', `Vehicules_idVehicule`=':idVehicule' 
-      WHERE `utilisateurs_idutilisateur`=':idUtilisateur' and`Vehicules_idVehicule`=':idVehicule';");
-    $request->bindParam(':dateDebut', $dateDebut, PDO::PARAM_STR);
-    $request->bindParam(':dateFin', $dateFin, PDO::PARAM_STR);
-    $request->bindParam(':idVehicule', $idVehicule, PDO::PARAM_INT);
-    $request->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
-    $request->execute();
-    return $request->fetchAll(PDO::FETCH_ASSOC);
-}
-
-/* Fonction permettant de mettre à jour un type de catégorie */
-function updateTypeCategory($nomTypeCategorie, $idTypeCategorie)
-{
-    $connexion = getConnexion();
-    $request = $connexion->prepare("UPDATE `redloca`.`type_categories` 
-      SET `nomTypeCategorie`=':nomTypeCategorie' 
-      WHERE `idTypeCategorie`=':idTypeCategorie';");
-    $request->bindParam(':nomTypeCategorie', $nomTypeCategorie, PDO::PARAM_INT);
-    $request->bindParam(':idTypeCategorie', $idTypeCategorie, PDO::PARAM_INT);
-    $request->execute();
-    return $request->fetchAll(PDO::FETCH_ASSOC);
-}
-
 ?>

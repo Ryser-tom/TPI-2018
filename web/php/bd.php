@@ -1,10 +1,18 @@
 <?php
-define('DB_HOST', "127.0.0.1"); //adresse ip de la base.
-define('DB_NAME', "redLoca"); //nom de la base de donnée.
-define('DB_USER', "redLoca"); //utilisateur.
-define('DB_PASS', "oIilPyhSwCufiriv"); //mdp.
+/**
+ * Author: Tom Ryser
+ * Date: 22.05.2018
+ * Version : 1.0
+ * Title : bd
+ * Description : contains the database login function and login information.
+ */
+define('DB_HOST', "127.0.0.1"); //ip address of the database
+define('DB_NAME', "redLoca"); //name of the database.
+define('DB_USER', "redLoca"); //user.
+define('DB_PASS', "oIilPyhSwCufiriv"); //password.
 //root password = kFaWJQhZJSJJk9jC
-/* Fonction permettant la connexion à la base de données.  */
+
+/* This function is used to initialize the connection to the database.  */
 function getConnexion() {
   static $dbb = null;
   if ($dbb === null) {

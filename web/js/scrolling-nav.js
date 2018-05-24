@@ -1,3 +1,4 @@
+// this code come from https://startbootstrap.com/template-overviews/scrolling-nav/
 (function($) {
   "use strict"; // Start of use strict
 

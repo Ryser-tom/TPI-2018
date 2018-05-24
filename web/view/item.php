@@ -175,6 +175,7 @@ if ($vehicle == null) {
   <!-- Custom JavaScript for this theme -->
   <script src="../js/scrolling-nav.js"></script>
   <script>
+    //function to change the minimum date of the "end" input to match the date selected in the "start" input
     $("#end").change(function() {
       var T = $("#end").val();
       if ( $("#end").val()=="" ) {
@@ -195,7 +196,7 @@ if ($vehicle == null) {
         });
       } 
     });
-
+    //function to calculate the total rental price
     function locationPrice() {
       var parts =$("#end").val().split('-');
       var EndDate = new Date(parts[0], parts[1] - 1, parts[2]);

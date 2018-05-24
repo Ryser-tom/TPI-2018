@@ -1,0 +1,37 @@
+\select@language {french}
+\contentsline {chapter}{\numberline {1}Code Source TPI 2018}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}CSS}{3}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}main.css}{3}{subsection.1.1.1}
+\contentsline {section}{\numberline {1.2}HTML}{4}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}add}{4}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}adminReservation}{6}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}adminUpdate}{7}{subsection.1.2.3}
+\contentsline {subsection}{\numberline {1.2.4}adminUsers}{9}{subsection.1.2.4}
+\contentsline {subsection}{\numberline {1.2.5}adminVehicle}{10}{subsection.1.2.5}
+\contentsline {subsection}{\numberline {1.2.6}changePassword}{11}{subsection.1.2.6}
+\contentsline {subsection}{\numberline {1.2.7}index}{13}{subsection.1.2.7}
+\contentsline {subsection}{\numberline {1.2.8}item}{14}{subsection.1.2.8}
+\contentsline {subsection}{\numberline {1.2.9}items}{16}{subsection.1.2.9}
+\contentsline {subsection}{\numberline {1.2.10}login}{17}{subsection.1.2.10}
+\contentsline {subsection}{\numberline {1.2.11}nav}{19}{subsection.1.2.11}
+\contentsline {subsection}{\numberline {1.2.12}register}{20}{subsection.1.2.12}
+\contentsline {subsection}{\numberline {1.2.13}updateUser}{22}{subsection.1.2.13}
+\contentsline {subsection}{\numberline {1.2.14}updateVehicle}{23}{subsection.1.2.14}
+\contentsline {subsection}{\numberline {1.2.15}user}{26}{subsection.1.2.15}
+\contentsline {section}{\numberline {1.3}PHP}{28}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}bd}{28}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}fonctionBD\_delete}{28}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {1.3.3}fonctionBD\_insert}{28}{subsection.1.3.3}
+\contentsline {subsection}{\numberline {1.3.4}fonctionBD\_select}{29}{subsection.1.3.4}
+\contentsline {subsection}{\numberline {1.3.5}fonctionBD\_update}{30}{subsection.1.3.5}
+\contentsline {subsection}{\numberline {1.3.6}logout}{30}{subsection.1.3.6}
+\contentsline {subsection}{\numberline {1.3.7}reservation}{30}{subsection.1.3.7}
+\contentsline {section}{\numberline {1.4}JS}{32}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}scrolling-nav}{32}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {1.4.2}validate-addVehicle}{32}{subsection.1.4.2}
+\contentsline {subsection}{\numberline {1.4.3}validate-adminUpdateUser}{33}{subsection.1.4.3}
+\contentsline {subsection}{\numberline {1.4.4}validate-login}{34}{subsection.1.4.4}
+\contentsline {subsection}{\numberline {1.4.5}validate-password}{35}{subsection.1.4.5}
+\contentsline {subsection}{\numberline {1.4.6}validate-register}{35}{subsection.1.4.6}
+\contentsline {subsection}{\numberline {1.4.7}validate-updateUser}{36}{subsection.1.4.7}
+\contentsline {subsection}{\numberline {1.4.8}validate-updateVehicle}{37}{subsection.1.4.8}

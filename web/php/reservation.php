@@ -1,4 +1,11 @@
 <?php
+/**
+ * Author: Tom Ryser
+ * Date: 22.05.2018
+ * Version : 1.0
+ * Title : reservation
+ * Description : contains the function to add a rental.
+ */
 session_start();
 try{
     if(isset($_SESSION['userId'])){

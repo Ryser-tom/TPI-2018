@@ -1,7 +1,14 @@
 <?php
+/**
+ * Author: Tom Ryser
+ * Date: 22.05.2018
+ * Version : 1.0
+ * Title : fonctionBD_delete
+ * Description : contains all data deleting functions in the database.
+ */
 require_once('bd.php');
 
-/* Fonction permettant de mettre à jour un type de catégorie */
+/* This function allows you to delete a vehicle */
 function deleteVehicle($idVehicle)
 {
     $connexion = getConnexion();
@@ -11,7 +18,7 @@ function deleteVehicle($idVehicle)
     return true;
 }
 
-/* Fonction permettant de mettre à jour un type de catégorie */
+/* This function allows you to delete a reservation. */
 function cancelReservation($vehicleId, $userId, $startDate, $endDate)
 {
     $connexion = getConnexion();
@@ -28,7 +35,7 @@ function cancelReservation($vehicleId, $userId, $startDate, $endDate)
     return true;
 }
 
-/* Fonction permettant de mettre à jour un type de catégorie */
+/* This function allows you to delete a reservation from an admin account */
 function adminCancelReservation($vehicleId, $startDate, $endDate)
 {
     $connexion = getConnexion();

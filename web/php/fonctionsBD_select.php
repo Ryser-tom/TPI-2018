@@ -1,9 +1,15 @@
 <?php
+/**
+ * Author: Tom Ryser
+ * Date: 22.05.2018
+ * Version : 1.0
+ * Title : fonctionBD_select
+ * Description : contains all data selection functions in the database.
+ */
 require_once('bd.php');
 
-/* Fonction permettant de vérifier que l'utilisateur existe.  */
-function login($email, $password)
-{
+/* This function allows you to retrieve the list of users that correspond to the Email and password entered in parameters.  */
+function login($email, $password){
     $password = sha1($password);
     $connexion = getConnexion();
     $request = $connexion->prepare("SELECT * FROM `utilisateurs` WHERE email = :email AND mdp = :password;");
@@ -13,9 +19,8 @@ function login($email, $password)
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de vérifier que l'utilisateur existe.  */
-function getUser($userId)
-{
+/* This function allows you to retrieve the list of user information whose id has been passed as parameter.  */
+function getUser($userId){
     $connexion = getConnexion();
     $request = $connexion->prepare("SELECT * FROM `utilisateurs` WHERE idUtilisateur = :userId;");
     $request->bindParam(':userId', $userId, PDO::PARAM_STR);
@@ -23,16 +28,15 @@ function getUser($userId)
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de vérifier que l'utilisateur existe.  */
-function getAllUsers()
-{
+/* This function allows you to retrieve the list of users.  */
+function getAllUsers(){
     $connexion = getConnexion();
     $request = $connexion->prepare("SELECT * FROM `utilisateurs`");
     $request->execute();
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de vérifier que l'utilisateur existe.  */
+/* This function allows you to retrieve the list of vehicles.  */
 function getAllVehicles(){
     $connexion = getConnexion();
     $request = $connexion->prepare("SELECT idVehicule, immatriculation, marque, model, nbPlace, 
@@ -44,7 +48,7 @@ function getAllVehicles(){
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de vérifier que l'utilisateur existe.  */
+/* This function allows you to retrieve the list of available vehicles from the date passed in parameter..  */
 function getAllVehiclesAvaible($dateResearch){
     $dateResearch = strtotime($dateResearch);
     $dateResearch = date('Y-m-d H:i:s', $dateResearch);
@@ -69,18 +73,7 @@ function getAllVehiclesAvaible($dateResearch){
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de vérifier que l'utilisateur existe.  */
-function getVehicleOf($userId){
-    $connexion = getConnexion();
-    $request = $connexion->prepare("SELECT * FROM redloca.vehicules 
-    WHERE utilisateurs_idutilisateur = :userId AND dateFinDisponibilite > current_date() 
-    OR utilisateurs_idutilisateur = :userId AND dateFinDisponibilite IS null ORDER BY dateDebutDisponibilite;");
-    $request->bindParam(':userId', $userId, PDO::PARAM_INT);
-    $request->execute();
-    return $request->fetchAll(PDO::FETCH_ASSOC);
-}
-
-/* Fonction permettant de vérifier que l'utilisateur existe.  */
+/* This function allows you to retrieve the list of the 6 most recently available vehicles from today.  */
 function getRecentVehicleAvaible(){
     $connexion = getConnexion();
     $request = $connexion->prepare("SELECT idVehicule, marque, model, nbPlace, couleur, image, 
@@ -102,7 +95,18 @@ function getRecentVehicleAvaible(){
   return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de vérifier que l'utilisateur existe.  */
+/* This function allows to retrieve the list of vehicles belonging to a user thanks to the id of the user passed in parameter.  */
+function getVehicleOf($userId){
+    $connexion = getConnexion();
+    $request = $connexion->prepare("SELECT * FROM redloca.vehicules 
+    WHERE utilisateurs_idutilisateur = :userId AND dateFinDisponibilite > current_date() 
+    OR utilisateurs_idutilisateur = :userId AND dateFinDisponibilite IS null ORDER BY dateDebutDisponibilite;");
+    $request->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $request->execute();
+    return $request->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/* This function allows you to retrieve the list of vehicle information to create a new location.  */
 function getVehicleInfosReservation($idVehicule, $reservationDate)
 {
     $reservationDate = strtotime($reservationDate);
@@ -121,7 +125,7 @@ function getVehicleInfosReservation($idVehicule, $reservationDate)
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de vérifier que l'utilisateur existe.  */
+/* This function allows you to retrieve a vehicle's list of information.  */
 function getVehicleInfos($idVehicule)
 {
     $connexion = getConnexion();
@@ -134,7 +138,7 @@ function getVehicleInfos($idVehicule)
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de vérifier que l'utilisateur existe.  */
+/* This function allows you to retrieve the list of categories and their information.  */
 function getClass()
 {
     $connexion = getConnexion();
@@ -144,7 +148,7 @@ function getClass()
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de vérifier que l'utilisateur existe.  */
+/* This function allows you to retrieve the list of reservations.  */
 function getAllReservations()
 {
     $connexion = getConnexion();
@@ -156,7 +160,7 @@ function getAllReservations()
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* Fonction permettant de vérifier que l'utilisateur existe.  */
+/* This function allows you to retrieve the list of reservations for a user.   */
 function getReservationOf($idUtilisateur)
 {
     $connexion = getConnexion();

@@ -81,7 +81,10 @@ $vehicles = getAllVehicles();
                     echo"
                             <td>".$value['nom']."  ".$value['prenom']."</td>
                             <td>".$value['nomCategorie']."</td>
-                            <td><button type=\"button\" class=\"btn btn-warning\" onclick=\"window.location.href='adminVehicles.php?idVehicle=".$value['idVehicule']."&delete=True'\">Effacer</button></td>
+                            <td><button type=\"button\" class=\"btn btn-warning\" 
+                              onclick=\"window.location.href='adminVehicles.php?idVehicle=".$value['idVehicule']."&delete=True'\">Effacer
+                              </button>
+                            </td>
                         </tr>";    
                 }
                 echo"

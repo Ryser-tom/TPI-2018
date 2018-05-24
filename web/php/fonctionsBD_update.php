@@ -1,7 +1,14 @@
 <?php
+/**
+ * Author: Tom Ryser
+ * Date: 22.05.2018
+ * Version : 1.0
+ * Title : fonctionBD_update
+ * Description : contains all data update functions in the database.
+ */
 require_once('bd.php');
 
-/* Fonction permettant de mettre à jour les informations d'un vehicule */
+/* This function allows you to update a user's information. */
 function updateUser($lastName, $firstName, $birthDate, $mobile, $email, $password, $userId)
 {
     $password = sha1($password);
@@ -24,7 +31,7 @@ function updateUser($lastName, $firstName, $birthDate, $mobile, $email, $passwor
     }
 
 }
-/* Fonction permettant de mettre à jour les informations d'un vehicule */
+/* This function allows you to update a user's information from an admin account. */
 function adminUpdateUser($lastName, $firstName, $birthDate, $mobile, $email, $password, $userId, $actualPassword)
 {
     if ($password=="") {
@@ -48,7 +55,7 @@ function adminUpdateUser($lastName, $firstName, $birthDate, $mobile, $email, $pa
     return $request;
 }
 
-/* Fonction permettant de mettre à jour le mot de passe */
+/* This function allows you to update a user's password. */
 function updatePassword($newPassword, $oldPassword, $userId)
 {
     $newPassword = sha1($newPassword);
@@ -67,7 +74,7 @@ function updatePassword($newPassword, $oldPassword, $userId)
         throw new exception('<div class="alert alert-warning">le mot de passe actuel est incorrect</div>');
     }
 }
-/* Fonction permettant de mettre à jour les informations d'un vehicule */
+/* This function allows you to update the status of a user. (Lambda user or Administrator) */
 function updateUserType($idUser, $actualType)
 {
     if ($actualType == 1) {
@@ -82,7 +89,7 @@ function updateUserType($idUser, $actualType)
     $request->execute();
     return $request;
 }
-/* Fonction permettant de mettre à jour les informations d'un vehicule */
+/* This function makes it possible to update the information of a vehicle. */
 function updateVehicle($vehicleId, $numberPlate, $mark, $model, $class, $nbPlaces, $color, $image, $start, $end, $userId, $type)
 {
     $connexion = getConnexion();

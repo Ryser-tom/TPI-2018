@@ -1,0 +1,124 @@
+\documentclass[a4paper,12pt]{report}
+
+\usepackage[francais]{babel} % Typographie
+\usepackage[T1]{fontenc}     % Saisie en
+\usepackage{lmodern}
+
+%% Réglages généraux
+\usepackage[left=2.5cm, right=2cm, top=1.5cm, bottom=1.5cm]{geometry} % taille de la feuille
+\usepackage{fancyhdr} % Titre courant
+\usepackage{lastpage} % pour avoir \pageref{LastPage} : le nombre total de pages du doc
+
+%infos sur le document : auteur, titre, version (utilisées en page de garde, pied de page, filigrane...)
+\newcommand{\docauthor}{Tom Ryser}
+\newcommand{\doctitle}{\jobname{}.tex}
+%----------------------------------------------------------
+
+\usepackage{hyperref}
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\clearpage}
+
+% Entête et pied de page.
+\pagestyle{fancy}
+\fancyfoot[CO,CE]{\footnotesize\thepage~/~\pageref{LastPage}}
+\fancyfoot[RO,RE]{\scriptsize\emph{\docauthor{}}}
+\fancyfoot[LO,LE]{\scriptsize\emph{\doctitle{}}}
+\fancyhead[LO,CO,RO]{}
+
+\include{inc_listings_php}
+
+\usepackage{blindtext}
+\title{Code source de mon projet TPI}
+\date{2018\\ mai}
+\author{Tom Ryser\\ CFPT-Informatique}
+
+
+
+% le document commence réellement ici
+\begin{document}
+\maketitle
+\begin{center}
+	\textsc{Code source du projet}
+\end{center}
+
+\tableofcontents
+
+\chapter{Code Source TPI 2018}
+
+
+\section{CSS}
+
+\subsection{main.css}
+\lstinputlisting{../../web/css/style.css}
+
+\section{HTML}
+
+\subsection{add}
+\lstinputlisting{../../web/view/add.php}
+\subsection{adminReservation}
+\lstinputlisting{../../web/view/adminReservation.php}
+\subsection{adminUpdate}
+\lstinputlisting{../../web/view/adminUpdateUser.php}
+\subsection{adminUsers}
+\lstinputlisting{../../web/view/adminUsers.php}
+\subsection{adminVehicle}
+\lstinputlisting{../../web/view/adminVehicles.php}
+\subsection{changePassword}
+\lstinputlisting{../../web/view/changePassword.php}
+\subsection{index}
+\lstinputlisting{../../web/view/index.php}
+\subsection{item}
+\lstinputlisting{../../web/view/item.php}
+\subsection{items}
+\lstinputlisting{../../web/view/items.php}
+\subsection{login}
+\lstinputlisting{../../web/view/login.php}
+\subsection{nav}
+\lstinputlisting{../../web/view/nav.php}
+\subsection{register}
+\lstinputlisting{../../web/view/register.php}
+\subsection{updateUser}
+\lstinputlisting{../../web/view/updateUser.php}
+\subsection{updateVehicle}
+\lstinputlisting{../../web/view/updateVehicle.php}
+\subsection{user}
+\lstinputlisting{../../web/view/user.php}
+
+\section{PHP}
+
+\subsection{bd}
+\lstinputlisting{../../web/php/bd.php}
+\subsection{fonctionBD\_delete}
+\lstinputlisting{../../web/php/fonctionsBD_delete.php}
+\subsection{fonctionBD\_insert}
+\lstinputlisting{../../web/php/fonctionsBD_delete.php}
+\subsection{fonctionBD\_select}
+\lstinputlisting{../../web/php/fonctionsBD_delete.php}
+\subsection{fonctionBD\_update}
+\lstinputlisting{../../web/php/fonctionsBD_delete.php}
+\subsection{logout}
+\lstinputlisting{../../web/php/logout.php}
+\subsection{reservation}
+\lstinputlisting{../../web/php/reservation.php}
+
+\section{JS}
+
+\subsection{scrolling-nav}
+\lstinputlisting{../../web/js/scrolling-nav.js}
+\subsection{validate-addVehicle}
+\lstinputlisting{../../web/js/validate-addVehicle.js}
+\subsection{validate-adminUpdateUser}
+\lstinputlisting{../../web/js/validate-adminUpdateUser.js}
+\subsection{validate-login}
+\lstinputlisting{../../web/js/validate-login.js}
+\subsection{validate-password}
+\lstinputlisting{../../web/js/validate-password.js}
+\subsection{validate-register}
+\lstinputlisting{../../web/js/validate-register.js}
+\subsection{validate-updateUser}
+\lstinputlisting{../../web/js/validate-updateUser.js}
+\subsection{validate-updateVehicle}
+\lstinputlisting{../../web/js/validate-updateVehicle.js}
+
+
+\end{document}

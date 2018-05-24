@@ -1,7 +1,14 @@
 <?php
+/**
+ * Author: Tom Ryser
+ * Date: 22.05.2018
+ * Version : 1.0
+ * Title : fonctionBD_insert
+ * Description : contains all the functions for adding data to the database.
+ */
 require_once('bd.php');
 
-/* Fonction permettant de s'enregistrer.  */
+/* This function allows to insert the information of a user in the database  */
 function register($lastName, $firstName, $birthDate, $mobile, $Email, $password)
 {
   $password = sha1($password);
@@ -18,7 +25,7 @@ function register($lastName, $firstName, $birthDate, $mobile, $Email, $password)
   return $request;
 }
 
-/* fonction permettant d'ajouter un vehicule à la base de donnée */
+/* This function allows to insert a new vehicle in the database */
 function addVehicle($numberPlate, $mark, $model, $class, $nbPlaces, $color, $image, $start, $end, $userId)
 {
   $connexion = getConnexion();
@@ -38,7 +45,7 @@ function addVehicle($numberPlate, $mark, $model, $class, $nbPlaces, $color, $ima
   return $request;
 }
 
-/* fonction permettant d'ajouter une catégorie à la base de donnée */
+/* This function allows to insert a new location in the database */
 function addReservation($userId, $vehicleId, $startDate, $endDate)
 {
   $connexion = getConnexion();
